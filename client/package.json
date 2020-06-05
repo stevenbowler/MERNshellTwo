@@ -1,0 +1,35 @@
+{
+  "name": "mern",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:3001/",
+  "dependencies": {
+    "@hapi/joi": "^17.0.0",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.4.0",
+    "@testing-library/user-event": "^7.2.1",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-scripts": "^2.1.1",
+    "react-router-dom": "^4.3.1",
+    "react-keybinding-component": "^1.0.0",
+    "react-keydown": "^1.9.12",
+    "react-transition-group": "^4.3.0",
+    "reactstrap": "^8.2.0",
+    "boostrap": "^2.0.0",
+    "bootstrap": "^4.4.1",
+    "axios": "^0.18.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
