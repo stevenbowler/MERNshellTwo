@@ -280,7 +280,7 @@ class App extends React.Component {
             level={this.state.finalLevel}
           />
           <Switch>
-            <Route exact path="/" render={(props) => <Books {...props} username={this.state.name} />} />
+            <Route exact path="/" render={(props) => <Books {...props} username={this.state.name} token={this.token} email={this.email} />} />
             <Route exact path="/books" component={Books} />
             <Route exact path="/books/:id" component={Detail} />
             <Route component={NoMatch} />
