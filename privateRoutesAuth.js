@@ -17,6 +17,7 @@ module.exports = function (req, res, next) {
     try {
         const verified = jwt.verify(token, process.env.TOKEN_SECRET);
         req.user = verified;  // returns verified _ID from JWT.IO so use req.user from then on
+        console.log("auth req.user: ", req.user);
         next();
     } catch (err) {
         res.status(400).send('Invalid Token');

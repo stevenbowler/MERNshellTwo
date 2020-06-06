@@ -34,7 +34,8 @@ class Books extends Component {
 
   /**@function loadBooks */
   loadBooks = () => {
-    API.getBooks(this.props.username)
+    console.log("username: ", this.props.username);
+    API.getBooks({ username: this.props.username, token: this.props.token, email: this.props.email })
       .then(res => {
         this.setState({ books: res.data, title: "", author: "", synopsis: "" })
       }

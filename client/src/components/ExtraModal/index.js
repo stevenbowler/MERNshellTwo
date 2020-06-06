@@ -10,14 +10,14 @@ import {
     Col,
     Modal, ModalHeader, ModalBody, ModalFooter
 } from 'reactstrap';
-import axios from 'axios';
+// import axios from 'axios';
 
 
 class ExtraModal extends Component {
-    constructor(props) {
-        super(props);
+    // constructor(props) {
+    //     super(props);
 
-    }
+    // }
 
 
     componentDidMount() {

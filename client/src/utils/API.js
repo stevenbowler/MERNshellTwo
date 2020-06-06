@@ -9,8 +9,14 @@ export default {
    * @function getBooks 
    * @param {*} username
    * */
-  getBooks: function (username) {
-    return axios.get("/api/books/?=" + username);
+  getBooks: function (user) {
+    var url = "/api/books/?name=" + user.username;
+    if (user.username !== "Guest...Login") url = `/api/books/protected?name=${user.username}&email=${user.email}`; // used for protected routes in books.js
+    var token = user.token;
+    return axios.get(url,
+      {
+        headers: { 'auth-token': token },       // send token thru, booksController middleware will verify before proceeding
+      });
   },
 
   /**
