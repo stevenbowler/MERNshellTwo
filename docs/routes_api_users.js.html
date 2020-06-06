@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: routes/api/users.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: routes/api/users.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>//@ts-nocheck
+/**@module
+ * @requires express
+ * @requires router
+ * @requires bcryptjs
+ * @requires jwt
+ * @requires Game
+ * @requires verify
+ */
+
+const express = require('express');
+const router = express();
+const User = require('../../models/user');
+const bcrypt = require('bcryptjs');
+const { registerValidation, loginValidation } = require('../../validation');
+const jwt = require('jsonwebtoken');
+const verify = require('../../privateRoutesAuth');
+
+
+
+/**
+ * Register a new user
+ * @function
+ * @name post/register
+ * @memberof module:routes/users
+ * @param {string} path - /register
+ * @returns {object}
+ */
+router.post('/register', async (req, res) => {
+    // validate before creating user
+    const { error } = registerValidation(req.body);
+    if (error) return res.status(406).json({ message: error.details[0].message, });
+
+    // check if user already in database
+    const emailExist = await User.findOne({ email: req.body.email });
+    if (emailExist) return res.status(400).send('email already exists');
+
+    // Hash password
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(req.body.password, salt);
+    console.log(hashedPassword);
+
+
+    const user = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: hashedPassword
+    });
+    try {
+        const savedUser = await user.save();
+        console.log("saved user: ", savedUser);
+        res.send(savedUser);
+    } catch (err) {
+        res.json({ message: err });
+    }
+});
+
+
+//Login a user
+/**
+ * Login a new user
+ * @function
+ * @name post/login
+ * @memberof module:routes/users
+ * @param {string} path - /login
+ * @returns {object}
+ */
+router.post('/login', async (req, res) => {
+    // validate login data before logging-in user
+    const { error } = loginValidation(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+
+    // check if email already in database
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) return res.status(400).send({ "statusCode": 400, "statusMessage": "email does not exist" });
+
+    // check if password is correct
+    const validPassword = await bcrypt.compare(req.body.password, user.password); // true
+    if (!validPassword) return res.status(400).send('Invalid password');
+
+    //create and assign a token
+    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, { expiresIn: 3600 });
+    // console.log("login route token: " + token + " user: " + user);
+    res.header('auth-token', token).send({ "token": token, "user": user });
+
+});
+
+
+
+// get all users including handle query
+router.get('/', verify, async (req, res) => {
+    try {
+        const users = await User.find(req.query);  // will handle query ..api/movies?genre=horror etc
+        res.json(users);
+    } catch (err) {
+        res.json({ message: err });
+    }
+});
+
+
+
+/// get genre/:genreID is example route and parses params
+/**
+ * Basic route that sends the user first to the index.handlebars page with all MySQL records displayed
+ * @function
+ * @name get/
+ * @memberof module:routes/users
+ * @param {string} path - / to get you home.
+ * @returns {URL} Returns url to index.handlebars
+ */
+router.get('/genre/:genreID', async (req, res) => {
+    try {
+        const users = await User.find({ genre: req.params.genreID });
+        res.json(posts);
+    } catch (err) {
+        res.json({ message: err });
+    }
+});
+
+
+
+
+// get specific id
+router.get('/:postId', async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.postId);
+        res.json(post);
+    } catch (err) {
+        res.json(err);
+    }
+});
+
+
+//Delete specific id
+router.delete('/:postId', async (req, res) => {
+    try {
+        const removedPost = await Post.remove({ _id: req.params.postId });
+        res.json(removedPost);
+    } catch (err) {
+        res.json({ message: err });
+
+    }
+});
+
+
+//Update specific id
+router.patch('/:postId', async (req, res) => {
+    try {
+        const updatedPost = await Post.updateOne(
+            { _id: req.params.postId },
+            { $set: { title: req.body.title } },
+        );
+        res.json(updatedPost);
+    } catch (err) {
+        res.json({ message: err });
+    }
+});
+
+module.exports = router;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">MERNshellTwo</a></h2><h3>Modules</h3><ul><li><a href="module-client_src_App.html">client/src/App</a></li><li><a href="module-client_src_components_AppNavbar_index.html">client/src/components/AppNavbar/index</a></li><li><a href="module-client_src_components_DeleteBtn_index.html">client/src/components/DeleteBtn/index</a></li><li><a href="module-client_src_components_ExtraModal_index.html">client/src/components/ExtraModal/index</a></li><li><a href="module-client_src_components_Form_index.html">client/src/components/Form/index</a></li><li><a href="module-client_src_components_Jumbotron_index.html">client/src/components/Jumbotron/index</a></li><li><a href="module-client_src_components_List_index.html">client/src/components/List/index</a></li><li><a href="module-client_src_components_LoginRegisterModals_index.html">client/src/components/LoginRegisterModals/index</a></li><li><a href="module-client_src_pages_Books.html">client/src/pages/Books</a></li><li><a href="module-client_src_pages_Detail.html">client/src/pages/Detail</a></li><li><a href="module-client_src_pages_NoMatch.html">client/src/pages/NoMatch</a></li><li><a href="module-client_src_utils_API.html">client/src/utils/API</a></li><li><a href="module-client_src_utils_validationNameEmailPassword.html">client/src/utils/validationNameEmailPassword</a></li><li><a href="module-controllers_booksController.html">controllers/booksController</a></li><li><a href="module-controllers_usersController.html">controllers/usersController</a></li><li><a href="module-models_book.html">models/book</a></li><li><a href="module-models_user.html">models/user</a></li><li><a href="module-privateRoutesAuth.html">privateRoutesAuth</a></li><li><a href="module-routes_api_books.html">routes/api/books</a></li><li><a href="module-routes_api_users.html">routes/api/users</a></li><li><a href="module-server.html">server</a></li><li><a href="module-validation.html">validation</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-client_src_utils_validationNameEmailPassword-emaileValidation.html">emaileValidation</a></li><li><a href="module-client_src_utils_validationNameEmailPassword-nameValidation.html">nameValidation</a></li><li><a href="module-client_src_utils_validationNameEmailPassword-passwordValidation.html">passwordValidation</a></li><li><a href="module-controllers_usersController-create.html">create</a></li><li><a href="module-controllers_usersController-findAll.html">findAll</a></li><li><a href="module-controllers_usersController-findById.html">findById</a></li><li><a href="module-controllers_usersController-remove.html">remove</a></li><li><a href="module-controllers_usersController-update.html">update</a></li><li><a href="module-models_book-bookSchema.html">bookSchema</a></li><li><a href="module-models_user-UserSchema.html">UserSchema</a></li><li><a href="module-validation-loginValidation.html">loginValidation</a></li><li><a href="module-validation-registerValidation.html">registerValidation</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Fri Jun 05 2020 22:07:05 GMT-0500 (Central Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

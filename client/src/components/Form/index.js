@@ -1,3 +1,7 @@
+//@ts-check
+/**@module 
+ * @requires react
+*/
 import React from "react";
 
 // This file exports the Input, TextArea, and FormBtn components

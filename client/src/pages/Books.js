@@ -1,3 +1,5 @@
+//@ts-check
+/**@module*/
 import React, { Component } from "react";
 import DeleteBtn from "../components/DeleteBtn";
 import Jumbotron from "../components/Jumbotron";
@@ -16,11 +18,13 @@ class Books extends Component {
   };
   // previousName = this.props.username;
 
+  /**@function componentDidMount */
   componentDidMount() {
     this.loadBooks();
     this.previousName = this.props.username;
   }
 
+  /**@function componentDidUpdate */
   componentDidUpdate() {
     if (this.previousName !== this.props.username) {  // if login or logout update books displayed
       this.loadBooks();
@@ -28,6 +32,7 @@ class Books extends Component {
     }
   }
 
+  /**@function loadBooks */
   loadBooks = () => {
     API.getBooks(this.props.username)
       .then(res => {
@@ -37,12 +42,14 @@ class Books extends Component {
       .catch(err => console.log(err));
   };
 
+  /**@function deleteBook */
   deleteBook = id => {
     API.deleteBook(id)
       .then(res => this.loadBooks())
       .catch(err => console.log(err));
   };
 
+  /**@function handleInputChange */
   handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
@@ -50,9 +57,9 @@ class Books extends Component {
     });
   };
 
+  /**@function handleFormSubmit */
   handleFormSubmit = event => {
     event.preventDefault();
-    console.log("arrived at handleFormSubmit");
     if (this.state.title && this.state.author) {
       API.saveBook({
         title: this.state.title,

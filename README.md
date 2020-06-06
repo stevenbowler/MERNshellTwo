@@ -15,7 +15,7 @@ This project has afforded this programmer the opportunity to gain experience in 
 
 1. Watch the video tutorial by clicking [this link](https://drive.google.com/file/d/1dXeXGydfJTvsE2GS7LnczJzTW0EKO-wS/view?usp=sharing). Then click [this link](https://drive.google.com/file/d/1_4N8HZdfe0iLeP5e1oFAKL5MQbadpiw6/view?usp=sharing).
 
-2. See example MERNshell deployed by [clicking here](https://mernshell.herokuapp.com/).
+2. See example MERNshellTwo deployed by [clicking here](https://mernshelltwo.herokuapp.com/).
 
 3. See another example of app fully deployed [clicking here](https://secure-citadel-76923.herokuapp.com/).
 
@@ -23,17 +23,17 @@ This project has afforded this programmer the opportunity to gain experience in 
 ````
 $ mkdir clonedir
 $ cd clonedir
-$ git clone --bare https://github.com/stevenbowler/MERNshell.git
-$ cd MERNshell.git
+$ git clone --bare https://github.com/stevenbowler/MERNshellTwo.git
+$ cd MERNshellTwo.git
 ````
 5. Go to GitHub and open a new repository.
 6. Copy the Clone link from the repository (https://github.com/yourGitHubId/newRepository.git).
-7. Return to Git Bash and MERNshell.git directory.
+7. Return to Git Bash and MERNshellTwo.git directory.
 8. Enter the following commands from Git Bash:
 ````
 $ git push --mirror https://github.com/yourGitHubId/newRepository.git
 $ cd ..
-$ rm -rf MERNshell.git
+$ rm -rf MERNshellTwo.git
 $ cd ..
 $ rm -rf clondir
 ````
@@ -58,25 +58,25 @@ $ npm install
 $ cd ..
 $ npm run dev
 ````
-14. Check out localhost:3000 should look like [this](https://mernshell.herokuapp.com/).
+14. Check out localhost:3000 should look like [this](https://mernshelltwo.herokuapp.com/).
 
 
 
 ### Program Documentation
 
-See [program documentation](https://stevenbowler.github.io/MERNshell/docs/index.html) in JSDOC format.
+See [program documentation](https://stevenbowler.github.io/MERNshellTwo/docs/index.html) in JSDOC format.
 
-Link to the repository [here](https://github.com/stevenbowler/MERNshell/).
+Link to the repository [here](https://github.com/stevenbowler/MERNshellTwo/).
 
 Requires [dotenv](https://www.npmjs.com/package/dotenv) to be installed and a `.env` file must be stored in the root directory for the app.  The `.env` file must contain the app owner's MongoDB URL with embedded username and password.  _*To use the same user database in development, testing and production then, it is critically important that the TOKEN_SECRET shown below be exactly the same string.*_
 ````
-DB_CONNECTION=your_mongodb_url_with_embedded_username_password
+MONGODB_URI=your_mongodb_url_with_embedded_username_password
 TOKEN_SECRET = any_random_string_but_always_use_same_string
 ````
 
 To deploy to Heroku then following `git push heroku master` command, and before accessing the app page, will be necesary to set the two environmental variables with these commands from the Heroku CLI:
 ````
-heroku config:set --app=mernshell DB_CONNECTION=your_mongodb_url_with_embedded_username_password
+heroku config:set --app=mernshell MONGODB_URI=your_mongodb_url_with_embedded_username_password
 heroku config:set --app=mernshell TOKEN_SECRET=any_random_string_but_always_use_same_string
 ````
 

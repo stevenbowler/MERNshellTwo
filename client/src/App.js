@@ -1,17 +1,30 @@
+//@ts-check
+/**@module 
+ * @requires react
+ * @requires react-router-dom
+ * @requires module:/src/pages/Books
+ * @requires module:/src/pages/Detail
+ * @requires module:/src/pages/NoMatch
+ * @requires bootstrap
+ * @requires axios
+ * @requires module:/src/components/AppNavbar
+ * @requires module:/src/components/LoginRegisterModals
+ * @requires module:/src/components/ExtraModal
+*/
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Books from "./pages/Books";
 import Detail from "./pages/Detail";
 import NoMatch from "./pages/NoMatch";
-import Nav from "./components/Nav";
+// import Nav from "./components/Nav";  // was in original Week 20 Activity 11
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import './App.css';
-import { Container } from 'reactstrap';
+//import { Container } from 'reactstrap';   // was used in origial MERNshell
 import AppNavbar from './components/AppNavbar';
 import LoginRegisterModals from './components/LoginRegisterModals';
-import LeaderBoardModal from './components/Modal';
+import Modal from './components/ExtraModal';
 
 
 
@@ -255,7 +268,7 @@ class App extends React.Component {
             email={this.email}
             password={this.password}
           />
-          <LeaderBoardModal
+          <Modal
             loggedIn={this.state.loggedIn}
             onLogout={this.handleLogout}
             isOpenLeaderBoardModal={this.state.isOpenLeaderBoardModal}
