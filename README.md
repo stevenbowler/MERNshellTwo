@@ -1,8 +1,7 @@
 # MERNshellTwo
 
 ### Overview
-This is a copy of the directory for UTA Bootcamp Week 20 Activity 11, the complete MERN stack app shell.  This enables development, testing and deployment of a MERN app.  The app has been updated to include the full login auth and some user functionality to demonstrate saving history/book date per user.  To use the shell: copy your ReactJS app into client/src directory, then set props to link up navbar and client/App.js functions to your containers, see video in User Documentation section.  
-
+This is a MERN stack app shell repo that can be used as a base for a project.  The purpose is to facilitate development, testing and deployment of a MERN app.  The repo code include the full login auth with validation, password encryption and JSON Web Token, and some user functionality to demonstrate the usage of the bare components provided. 
 
 ### Overview
 
@@ -43,20 +42,17 @@ $ git clone https://github.com/yourGitHubId/newRepository.git
 ````
 10. Create a `.env` file in the directory of the new local repository.
 11. In `.env` file enter values for:
-    1. `DB_CONNECTION` which is your Mongo DB URL string complete with your authorized Mongo account and password.
+    1. `MONGODB_URL` which is your Mongo DB URL string complete with your authorized Mongo account and password.
     2. `TOKEN_SECRET` unique random string that you chose, will be used to generate JSON Web Tokens.
 12. `.env` file should look like this:
 ````
-DB_CONNECTION=your_mongodb_url_with_account_password_collection
+MONGODB_URL=your_mongodb_url_with_account_password_collection
 TOKEN_SECRET=your_unique_random_string
 ````
 13. From Git Bash prompt local directory (master) enter the following:
 ````
 $ npm install
-$ cd client
-$ npm install
-$ cd ..
-$ npm run dev
+$ npm start
 ````
 14. Check out localhost:3000 should look like [this](https://mernshelltwo.herokuapp.com/).
 
