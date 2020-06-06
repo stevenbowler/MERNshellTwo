@@ -1,3 +1,7 @@
+//@ts-check
+/**@module 
+ * @requires react
+*/
 import React, { Component } from 'react';
 import {
     Button,

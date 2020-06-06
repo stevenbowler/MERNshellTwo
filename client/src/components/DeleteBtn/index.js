@@ -1,3 +1,7 @@
+//@ts-check
+/**@module 
+ * @requires react
+*/
 import React from "react";
 import "./style.css";
 

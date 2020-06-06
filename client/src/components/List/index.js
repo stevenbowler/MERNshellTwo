@@ -1,8 +1,11 @@
+//@ts-check
+/**@module */
 import React from "react";
 import "./style.css";
 
 // This file exports both the List and ListItem components
 
+/**@function List */
 export function List({ children }) {
   return (
     <div className="list-overflow-container">
@@ -11,6 +14,7 @@ export function List({ children }) {
   );
 }
 
+/**@function ListItem */
 export function ListItem({ children }) {
   return <li className="list-group-item">{children}</li>;
 }
