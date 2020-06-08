@@ -35,7 +35,10 @@ class LoginRegisterModals extends Component {
 
 
     }
-
+    /**
+     * @function handleSubmit
+     * @param {*} event
+     */
     handleSubmit = (event) => {
         // console.log("App.js handleSubmit logging in with: ", event.target.email.value);
         const data = {
@@ -60,6 +63,10 @@ class LoginRegisterModals extends Component {
         else event.preventDefault();
     }
 
+    /**
+     * handle Cancel event button
+     * @function handleCancel
+     */
     handleCancel = () => {
         this.validEmail = false;
         this.invalidEmail = false;
@@ -73,6 +80,12 @@ class LoginRegisterModals extends Component {
         this.props.onCancel();
     }
 
+
+    /**
+     * Handle changes in name field on login/register form
+     * @function handleNameChange
+     * @param {*} event
+     */
     handleNameChange = (event) => {
         const data = {
             name: event.target.value
@@ -96,6 +109,11 @@ class LoginRegisterModals extends Component {
     }
 
 
+    /**
+     * handle each character input in email field
+     * @function handleEmailChange
+     * @param {*} event
+     */
     handleEmailChange = (event) => {
         const data = {
             email: event.target.value
@@ -119,6 +137,12 @@ class LoginRegisterModals extends Component {
     }
 
 
+
+    /**
+     * handle each character input in password field
+     * @function handlePasswordChange
+     * @param {*} event
+     */
     handlePasswordChange = (event) => {
         const data = {
             password: event.target.value

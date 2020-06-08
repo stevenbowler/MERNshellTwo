@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Namespace: create</title>
+    <title>JSDoc: Source: client/src/components/Grid/index.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,98 +17,61 @@
 
 <div id="main">
 
-    <h1 class="page-title">Namespace: create</h1>
+    <h1 class="page-title">Source: client/src/components/Grid/index.js</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            <span class="ancestors"><a href="module-controllers_usersController.html">controllers/usersController</a>~</span>create</h2>
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>//@ts-check
+/**@module */
 
-<article>
-    <div class="container-overview">
-    
-        
+import React from "react";
 
-        
+// Exporting the Container, Row, and Col components from this file
 
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_usersController.js.html">controllers/usersController.js</a>, <a href="controllers_usersController.js.html#line22">line 22</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
+/**
+ * This Container component allows us to use a bootstrap container without worrying about class names
+ * @function Container
+ * @param {*} fluid
+ */
+export function Container({ fluid, children }) {
+  return &lt;div className={`container${fluid ? "-fluid" : ""}`}>{children}&lt;/div>;
+}
 
 
-        
-    
-    </div>
+/**
+ * This Row component lets us use a bootstrap row without having to think about class names
+ * @function Container
+ * @param {*} fluid
+*/
+export function Row({ fluid, children }) {
+  return &lt;div className={`row${fluid ? "-fluid" : ""}`}>{children}&lt;/div>;
+}
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+/**
+ * This Col component lets us size bootstrap columns with less syntax
+ * e.g. &lt;Col size="md-12"> instead of &lt;div className="col-md-12">
+ * @function Container
+ * @param {*} fluid
+*/export function Col({ size, children }) {
+  return (
+    &lt;div
+      className={size
+        .split(" ")
+        .map(size => "col-" + size)
+        .join(" ")}
+    >
+      {children}
+    &lt;/div>
+  );
+}
+</code></pre>
+        </article>
+    </section>
 
 
 

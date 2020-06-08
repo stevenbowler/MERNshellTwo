@@ -1,5 +1,10 @@
 //@ts-check
-/**@module */
+/**@module 
+ * @requires express
+ * @requires dotenv
+ * @requires mongoose
+ * @requires module:/routes
+*/
 const express = require("express");
 require('dotenv').config();
 const mongoose = require("mongoose");

@@ -4,6 +4,10 @@ import React from "react";
 import { Col, Row, Container } from "../components/Grid";
 import Jumbotron from "../components/Jumbotron";
 
+/**
+ * if route/resource not found display this page
+ * @function NoMatch
+ */
 function NoMatch() {
   return (
     <Container fluid>
