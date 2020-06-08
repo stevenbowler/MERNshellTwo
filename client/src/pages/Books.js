@@ -18,13 +18,17 @@ class Books extends Component {
   };
   // previousName = this.props.username;
 
-  /**@function componentDidMount */
+  /**
+   * Initial loadbooks and set previous state variable to track login username change
+   * @function componentDidMount */
   componentDidMount() {
     this.loadBooks();
     this.previousName = this.props.username;
   }
 
-  /**@function componentDidUpdate */
+  /**
+   * If there was a login then reload books with the newly logged in users choices
+   * @function componentDidUpdate */
   componentDidUpdate() {
     if (this.previousName !== this.props.username) {  // if login or logout update books displayed
       this.loadBooks();
@@ -32,7 +36,9 @@ class Books extends Component {
     }
   }
 
-  /**@function loadBooks */
+  /**
+   * This is where the magic happens ... the infamous / route
+   * @function loadBooks */
   loadBooks = () => {
     console.log("username: ", this.props.username);
     API.getBooks({ username: this.props.username, token: this.props.token, email: this.props.email })
@@ -43,14 +49,18 @@ class Books extends Component {
       .catch(err => console.log(err));
   };
 
-  /**@function deleteBook */
+  /**
+   * Delete a book from the list
+   * @function deleteBook */
   deleteBook = id => {
     API.deleteBook(id)
       .then(res => this.loadBooks())
       .catch(err => console.log(err));
   };
 
-  /**@function handleInputChange */
+  /**
+   * handle changes in input field
+   * @function handleInputChange */
   handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
@@ -58,7 +68,9 @@ class Books extends Component {
     });
   };
 
-  /**@function handleFormSubmit */
+  /**
+   * Onclick submit of new choice book/author etc.
+   * @function handleFormSubmit */
   handleFormSubmit = event => {
     event.preventDefault();
     if (this.state.title && this.state.author) {

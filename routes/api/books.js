@@ -9,7 +9,7 @@ const verify = require('../../privateRoutesAuth');
 // simple logger for this router's requests
 // all requests to this router will first hit this middleware (and could be used to check for valid token)
 /**
- * All requests to this router will first hit this middleware, log, check token if not username "Guest...Login"
+ * All requests to this router will first hit this "logger" middleware, log, check token if not username "Guest...Login"
  * @function
  * @name route/
  * @memberof module:routes/api/books
@@ -24,6 +24,15 @@ router.use(function (req, res, next) {
 });
 
 
+
+/**
+ * Check JSON Web Token is valid, if yes sets req.user, this works, 
+ * *Uncomment this middleware to protect all routes below
+ */
+// router.use(verify, function (req, res, next) {
+//   console.log("verify middleware test: ");
+//   next()
+// });
 
 
 
@@ -72,14 +81,6 @@ router
   .delete(booksController.remove);
 
 
-
-/**
- * Check JSON Web Token is valid, if yes sets req.user, this works
- */
-// router.use(verify, function (req, res, next) {
-//   console.log("verify middleware test: ");
-//   next()
-// });
 
 
 
