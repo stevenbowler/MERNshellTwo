@@ -34,7 +34,7 @@ $ git push --mirror https://github.com/yourGitHubId/newRepository.git
 $ cd ..
 $ rm -rf MERNshellTwo.git
 $ cd ..
-$ rm -rf clondir
+$ rm -rf clonedir
 ````
 9. While in Git Bash, go to the directory where you want to clone down the newRepositoy.git enter this command:
 ````
