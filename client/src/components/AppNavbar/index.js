@@ -16,6 +16,8 @@ import {
     // Container,
     Button
 } from 'reactstrap';
+import { connect } from 'react-redux';
+
 
 
 
@@ -78,20 +80,20 @@ class AppNavbar extends Component {
             <Navbar color="dark" expand="sm" className="mb-5 sticky-top">
                 {/* <Container> */}
                 <NavbarBrand href="/">MERNshellTwo</NavbarBrand>
-                <NavbarText className="text-warning" placeholder="test">{this.props.name}</ NavbarText>
+                <NavbarText className="text-warning" placeholder="test">{this.props.username}</ NavbarText>
                 <NavbarToggler color="dark" border="dark" onClick={this.toggle}><img src='hamburger.jpg' alt='Menu' style={{
                     height: "40px",
                     width: "40px"
                 }}></img></NavbarToggler>
                 <Collapse isOpen={this.props.isOpen} navbar>
                     <Nav className="ml-auto" navbar>
-                        <Button hidden={this.props.loggedIn ? true : false} float="left" display="inline" onClick={this.register}>Register</Button>
-                        <Button hidden={this.props.loggedIn ? true : false} float="left" display="inline" onClick={this.login}>Login</Button>
-                        <Button hidden={this.props.loggedIn ? false : true} float="left" display="inline" onClick={this.logout}>Logout</Button>
-                        <Button hidden={this.props.loggedIn ? false : true} float="left" display="inline" onClick={this.leaderBoard}>Modal</Button>
-                        <Button hidden={this.props.loggedIn ? true : false} float="left" display="inline" onClick={this.tutorial}>Tutorial</Button>
+                        <Button color="dark" hidden={this.props.loggedIn ? true : false} float="left" display="inline" onClick={this.register}>Register</Button>
+                        <Button color="dark" hidden={this.props.loggedIn ? true : false} float="left" display="inline" onClick={this.login}>Login</Button>
+                        <Button color="dark" hidden={this.props.loggedIn ? false : true} float="left" display="inline" onClick={this.logout}>Logout</Button>
+                        <Button color="dark" hidden={this.props.loggedIn ? false : true} float="left" display="inline" onClick={this.leaderBoard}>Modal</Button>
+                        <Button color="dark" hidden={this.props.loggedIn ? true : false} float="left" display="inline" onClick={this.tutorial}>Tutorial</Button>
                         {/* <Button float="left" display="inline" onClick={this.unused}>Unused</Button> */}
-                        <Button float="left" type="color" display="inline" onClick={this.changeColor}>Color</Button>
+                        <Button float="left" color="dark" display="inline" onClick={this.changeColor}>Color</Button>
                         <NavItem>
                             <NavLink display="inline" color="white" href="https://github.com/stevenbowler/MERNshellTwo">GitHub</NavLink>
                         </NavItem>
@@ -107,4 +109,13 @@ class AppNavbar extends Component {
 
 }
 
-export default AppNavbar;
+const mapStateToProps = (state) => {
+    return {
+        username: state.username,
+        email: state.email,
+        loggedIn: state.loggedIn
+    }
+}
+
+export default connect(mapStateToProps)(AppNavbar);
+// export default AppNavbar;

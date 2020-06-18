@@ -25,6 +25,10 @@ import './App.css';
 import AppNavbar from './components/AppNavbar';
 import LoginRegisterModals from './components/LoginRegisterModals';
 import Modal from './components/ExtraModal';
+import { connect } from 'react-redux';
+import { login, logout, loginError } from './redux/actionCreator';
+
+
 
 
 
@@ -154,6 +158,7 @@ class App extends React.Component {
       .catch(function (error) {
         console.log(" Could not register from App.js: " + error.message);
       })
+      //@ts-ignore
       .finally(function () {
         finishRegister();
       })
@@ -167,25 +172,29 @@ class App extends React.Component {
   handleLogin = (data) => {
     var tokenHandleLogin = "";
     var nameHandleLogin = "";
-    var loginError = "";
+    var emailHandleLogin = "";
+    var loginResponseError = "";
     const finishLogin = () => {
-      if (loginError) {
-        this.setState({ name: "wrong email or pswd" }); // will display error message on Navbar
-        // console.log(this.name);
+      if (loginResponseError) {
+        // console.log("loginResponseError: ", loginResponseError);
+        this.props.dispatch(loginError(loginResponseError));
         this.handleToggleLoginModal();
         return;
       }
-      this.token = tokenHandleLogin;
-      sessionStorage.setItem("token", this.token);
       // console.log("handleLogin this.token = tokenHandleLogin" + this.token);
-      this.email = data.email;
-      sessionStorage.setItem("email", this.email);
-      this.password = data.password;
+      sessionStorage.setItem("token", tokenHandleLogin);
+      sessionStorage.setItem("email", emailHandleLogin);
       sessionStorage.setItem("name", nameHandleLogin);
-      this.setState({ name: nameHandleLogin }); // will display name on Navbar
-      this.handleToggleLoginModal();
-      this.setState({ loggedIn: true });
       sessionStorage.setItem("loggedIn", "true");
+
+      var reduxPayload = {
+        token: tokenHandleLogin,
+        email: emailHandleLogin,
+        username: nameHandleLogin,
+        loggedIn: true
+      }
+      this.props.dispatch(login(reduxPayload));
+      this.handleToggleLoginModal();
     }
     axios
       .post(
@@ -202,9 +211,10 @@ class App extends React.Component {
       })
       .catch(function (error) {
         //console.log("Steve Output, could not login from App.js: " + error);
-        loginError = error;
+        loginResponseError = error;
         console.log("Error, could not login from App.js: ", loginError);
       })
+      //@ts-ignore
       .finally(function () {
         finishLogin();
       });
@@ -215,15 +225,11 @@ class App extends React.Component {
    * @function handleLogout
    */
   handleLogout = () => {
-    console.log(`logout: ${this.state.name}`);
-    this.token = "";
-    this.email = "";
-    this.password = "";
-    sessionStorage.setItem("token", this.token);
-    sessionStorage.setItem("email", this.email);
-    this.setState({ name: "Guest...Login" }, () => sessionStorage.setItem("name", this.state.name));
-    this.setState({ loggedIn: false });
-    sessionStorage.setItem("loggedIn", "false");   // TODO this may be needed:
+    console.log(`logout: ${this.props.name}`);
+    sessionStorage.setItem("token", "");
+    sessionStorage.setItem("email", "");
+    sessionStorage.setItem("loggedIn", "false");
+    this.props.dispatch(logout());
   }
 
 
@@ -257,8 +263,8 @@ class App extends React.Component {
       <Router>
         <div>
           <AppNavbar
-            name={this.state.name}
-            loggedIn={this.state.loggedIn}
+            // name={this.state.name}
+            // loggedIn={this.state.loggedIn}
             isOpen={this.state.isOpenNavBar}
             onRegister={this.handleToggleLoginRegisterModal}
             onLogin={this.handleToggleLoginModal}
@@ -274,20 +280,20 @@ class App extends React.Component {
             onCancel={this.handleToggleLoginRegisterModal}
             onRegister={this.handleRegister}
             onLogin={this.handleLogin}
-            name={this.state.name}
-            email={this.state.email}
+          // name={this.state.name}
+          // email={this.state.email}
           />
           <Modal
-            loggedIn={this.state.loggedIn}
+            // loggedIn={this.state.loggedIn}
             onLogout={this.handleLogout}
             isOpenLeaderBoardModal={this.state.isOpenLeaderBoardModal}
             onCancel={this.handleToggleLeaderBoardModal}
-            token={this.token}
-            email={this.email}
-            userName={this.state.name}
+          // token={this.token}
+          // email={this.email}
+          // userName={this.state.name}
           />
           <Switch>
-            <Route exact path="/" render={(props) => <Books {...props} username={this.state.name} token={this.state.token} email={this.state.email} />} />
+            <Route exact path="/" render={(props) => <Books {...props} />} />
             <Route exact path="/books" component={Books} />
             <Route exact path="/books/:id" component={Detail} />
             <Route component={NoMatch} />
@@ -298,5 +304,15 @@ class App extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    username: state.username,
+    email: state.email,
+    token: state.token,
+    loggedIn: state.loggedIn
+  }
+}
 
-export default App;
+export default connect(mapStateToProps)(App);
+
+// export default App;
