@@ -18,3 +18,18 @@ export function List({ children }) {
 export function ListItem({ children }) {
   return <li className="list-group-item">{children}</li>;
 }
+
+
+/**
+ * This Link component replaces the react-router-dom version, throws deprecation warning
+ * @function Link
+ * @param {*} href
+*/export function Link({ to, children }) {
+  return (
+    <a
+      href={to}
+    >
+      {children}
+    </a>
+  );
+}

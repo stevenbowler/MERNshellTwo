@@ -81,7 +81,7 @@ class AppNavbar extends Component {
                 {/* <Container> */}
                 <NavbarBrand href="/">MERNshellTwo</NavbarBrand>
                 <NavbarText className="text-warning" placeholder="test">{this.props.username}</ NavbarText>
-                <NavbarToggler color="dark" border="dark" onClick={this.toggle}><img src='hamburger.jpg' alt='Menu' style={{
+                <NavbarToggler color="dark" border="dark" onClick={this.toggle}><img src='/hamburger.jpg' alt='Menu' style={{
                     height: "40px",
                     width: "40px"
                 }}></img></NavbarToggler>

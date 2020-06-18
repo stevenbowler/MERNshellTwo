@@ -71,13 +71,6 @@ class App extends React.Component {
 
   }
 
-  // componentDidUpdate() {
-  // }
-
-  // componentWillUnmount() {
-  // }
-
-
 
   // STATE HANDLERS and related support functions FROM COMPONENTS
 
@@ -116,7 +109,7 @@ class App extends React.Component {
 
   /**
    * handle state.isOpenNavBar toggle for ReactStrap AppNavBar 
-   * @function
+   * @function handleToggleLoginModal
   */
   handleToggleLoginModal = () => {
     this.setState({ isOpenRegisterModal: !this.state.isOpenRegisterModal });
@@ -165,6 +158,7 @@ class App extends React.Component {
       ;
   }
 
+
   /**
    * @function handleLogin
    * @param {data} data
@@ -207,12 +201,30 @@ class App extends React.Component {
         console.log(`login user: ${response.data.user.name}`);
         tokenHandleLogin = response.data.token;
         nameHandleLogin = response.data.user.name;
+        emailHandleLogin = response.data.user.email;
         // console.log("app.js handleLogin tokenHandleLogin: " + tokenHandleLogin);
+
+        // sessionStorage.setItem("token", tokenHandleLogin);
+        // sessionStorage.setItem("email", emailHandleLogin);
+        // sessionStorage.setItem("name", nameHandleLogin);
+        // sessionStorage.setItem("loggedIn", "true");
+
+        // var reduxPayload = {
+        //   token: tokenHandleLogin,
+        //   email: emailHandleLogin,
+        //   username: nameHandleLogin,
+        //   loggedIn: true
+        // }
+        // this.props.dispatch(login(reduxPayload));
+        // this.handleToggleLoginModal();
+
       })
       .catch(function (error) {
         //console.log("Steve Output, could not login from App.js: " + error);
         loginResponseError = error;
-        console.log("Error, could not login from App.js: ", loginError);
+        console.log("Error, could not login from App.js: ", loginResponseError);
+        // this.props.dispatch(loginError(loginResponseError));
+        // this.handleToggleLoginModal();
       })
       //@ts-ignore
       .finally(function () {
@@ -263,8 +275,6 @@ class App extends React.Component {
       <Router>
         <div>
           <AppNavbar
-            // name={this.state.name}
-            // loggedIn={this.state.loggedIn}
             isOpen={this.state.isOpenNavBar}
             onRegister={this.handleToggleLoginRegisterModal}
             onLogin={this.handleToggleLoginModal}
@@ -280,21 +290,15 @@ class App extends React.Component {
             onCancel={this.handleToggleLoginRegisterModal}
             onRegister={this.handleRegister}
             onLogin={this.handleLogin}
-          // name={this.state.name}
-          // email={this.state.email}
           />
           <Modal
-            // loggedIn={this.state.loggedIn}
             onLogout={this.handleLogout}
             isOpenLeaderBoardModal={this.state.isOpenLeaderBoardModal}
             onCancel={this.handleToggleLeaderBoardModal}
-          // token={this.token}
-          // email={this.email}
-          // userName={this.state.name}
           />
           <Switch>
             <Route exact path="/" render={(props) => <Books {...props} />} />
-            <Route exact path="/books" component={Books} />
+            <Route exact path="/books" render={(props) => <Books {...props} />} />
             <Route exact path="/books/:id" component={Detail} />
             <Route component={NoMatch} />
           </Switch>
@@ -315,4 +319,3 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps)(App);
 
-// export default App;

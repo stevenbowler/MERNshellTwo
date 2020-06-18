@@ -29,7 +29,14 @@ class LoginRegisterModals extends Component {
         this.invalidNameMessage = "";
         this.invalidPasswordMessage = "";
         this.login = false;
+        this.wrapper = React.createRef();
     }
+
+
+
+
+
+
 
     componentDidMount() {
 
@@ -169,7 +176,7 @@ class LoginRegisterModals extends Component {
 
     render() {
         return (
-            <div>
+            <div ref={this.wrapper}>
                 <Modal isOpen={this.props.isOpenRegisterModal} modalTransition={{ timeout: 700 }} backdropTransition={{ timeout: 1300 }} toggle={this.toggleModal} >
                     <ModalHeader toggle={this.toggleModal}>{this.props.isOpenLoginModal ? "Login" : "Register"}</ModalHeader>
                     <ModalBody>

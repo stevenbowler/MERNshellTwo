@@ -4,9 +4,9 @@ import React, { Component } from "react";
 import DeleteBtn from "../components/DeleteBtn";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
+import { List, ListItem, Link } from "../components/List";  // Note added Link to replace react-router-dom which currently has deprecation error
 import { Col, Row, Container } from "../components/Grid";
-import { List, ListItem } from "../components/List";
 import { Input, TextArea, FormBtn } from "../components/Form";
 import { connect } from 'react-redux';
 
@@ -16,7 +16,8 @@ class Books extends Component {
     books: [],
     title: "",
     author: "",
-    synopsis: ""
+    synopsis: "",
+    value: { something: 'something' }
   };
   // previousName = this.props.username;
 
@@ -129,12 +130,17 @@ class Books extends Component {
             {this.state.books.length ? (
               <List>
                 {this.state.books.map(book => (
-                  <ListItem key={book._id}>
+                  <ListItem key={book._id} >
                     <Link to={"/books/" + book._id}>
                       <strong>
                         {book.title} by {book.author}
                       </strong>
                     </Link>
+                    {/* <a href="/books/" + book._id>
+                      <strong>
+                        {book.title} by {book.author}
+                      </strong>
+                    </a> */}
                     <DeleteBtn onClick={() => this.deleteBook(book._id)} />
                   </ListItem>
                 ))}
