@@ -17,50 +17,54 @@ import {
     Button
 } from 'reactstrap';
 import { connect } from 'react-redux';
+import {
+    toggleNavbar,
+    toggleExtraModal,
+    logout,
+    toggleLoginModal,
+    toggleRegisterModal
+} from '../../redux/actionCreator';
 
 
 
 
 class AppNavbar extends Component {
-    /**
-     * Toggle the navbar modal variable
-     * @function toggleModal */
-    toggleModal = () => this.modal = !this.modal;
-
-    /** 
-     * Unused
-     */
-    registerInput = () => this.toggleModal();
+    constructor(props) {
+        super(props);
+        this.wrapper = React.createRef();  //  todo requires ref={this.wrapper} in navbar div to eliminate deprecation warning
+    }
 
     /**
-     * Send back toggle signal to App.js, to open/close navbar
+     * Onclick Toggle Navbar with redux call
      * @function toggle
      */
-    toggle = () => this.props.onToggle();
+    toggleNavbar = () => this.props.dispatch(toggleNavbar());
+
+
+    /**
+     * Onclick toggle ExtraModal with redux toggle
+     * @function leaderBoard
+     */
+    extraModal = () => this.props.dispatch(toggleExtraModal());
+
 
     /**
      * Onclick request to register
      * @function register
      */
-    register = () => this.props.onRegister();
+    register = () => this.props.dispatch(toggleRegisterModal());
 
     /**
      * Onclick request to login
      * @function login
      */
-    login = () => this.props.onLogin();
+    login = () => this.props.dispatch(toggleLoginModal());
 
     /**
      * Onclick request to logout
      * @function logout
      */
-    logout = () => this.props.onLogout();
-
-    /**
-     * Onclick toggle leaderboard
-     * @function leaderBoard
-     */
-    leaderBoard = () => this.props.onLeaderBoard();
+    logout = () => this.props.dispatch(logout());
 
     /**
      * Onclick request tutorial video
@@ -78,20 +82,19 @@ class AppNavbar extends Component {
         return (
             // <div> //removed to get sticky navbar with reactstrap https://github.com/reactstrap/reactstrap/issues/1179
             <Navbar color="dark" expand="sm" className="mb-5 sticky-top">
-                {/* <Container> */}
                 <NavbarBrand href="/">MERNshellTwo</NavbarBrand>
                 <NavbarText className="text-warning" placeholder="test">{this.props.username}</ NavbarText>
-                <NavbarToggler color="dark" border="dark" onClick={this.toggle}><img src='/hamburger.jpg' alt='Menu' style={{
+                <NavbarToggler color="dark" border="dark" onClick={this.toggleNavbar}><img src='/hamburger.jpg' alt='Menu' style={{
                     height: "40px",
                     width: "40px"
                 }}></img></NavbarToggler>
-                <Collapse isOpen={this.props.isOpen} navbar>
+                <Collapse isOpen={this.props.isOpenNavbar} navbar>
                     <Nav className="ml-auto" navbar>
-                        <Button color="dark" hidden={this.props.loggedIn ? true : false} float="left" display="inline" onClick={this.register}>Register</Button>
-                        <Button color="dark" hidden={this.props.loggedIn ? true : false} float="left" display="inline" onClick={this.login}>Login</Button>
-                        <Button color="dark" hidden={this.props.loggedIn ? false : true} float="left" display="inline" onClick={this.logout}>Logout</Button>
-                        <Button color="dark" hidden={this.props.loggedIn ? false : true} float="left" display="inline" onClick={this.leaderBoard}>Modal</Button>
-                        <Button color="dark" hidden={this.props.loggedIn ? true : false} float="left" display="inline" onClick={this.tutorial}>Tutorial</Button>
+                        <Button color="dark" hidden={this.props.loggedIn === "true" ? true : false} float="left" display="inline" onClick={this.register}>Register</Button>
+                        <Button color="dark" hidden={this.props.loggedIn === "true" ? true : false} float="left" display="inline" onClick={this.login}>Login</Button>
+                        <Button color="dark" hidden={this.props.loggedIn === "true" ? false : true} float="left" display="inline" onClick={this.logout}>Logout</Button>
+                        <Button color="dark" hidden={this.props.loggedIn === "true" ? false : true} float="left" display="inline" onClick={this.extraModal}>Modal</Button>
+                        <Button color="dark" hidden={this.props.loggedIn === "true" ? true : false} float="left" display="inline" onClick={this.tutorial}>Tutorial</Button>
                         {/* <Button float="left" display="inline" onClick={this.unused}>Unused</Button> */}
                         <Button float="left" color="dark" display="inline" onClick={this.changeColor}>Color</Button>
                         <NavItem>
@@ -99,10 +102,7 @@ class AppNavbar extends Component {
                         </NavItem>
                     </Nav>
                 </Collapse>
-                {/* </Container> */}
-
             </Navbar>
-
             // </div >  //removed to get sticky navbar with reactstrap https://github.com/reactstrap/reactstrap/issues/1179
         );
     }
@@ -113,7 +113,8 @@ const mapStateToProps = (state) => {
     return {
         username: state.username,
         email: state.email,
-        loggedIn: state.loggedIn
+        loggedIn: state.loggedIn,
+        isOpenNavbar: state.isOpenNavbar
     }
 }
 

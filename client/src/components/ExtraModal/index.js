@@ -10,6 +10,8 @@ import {
     Col,
     Modal, ModalHeader, ModalBody, ModalFooter
 } from 'reactstrap';
+import { connect } from 'react-redux';
+import { toggleExtraModal } from '../../redux/actionCreator';
 // import axios from 'axios';
 
 
@@ -19,32 +21,16 @@ class ExtraModal extends Component {
 
     // }
 
+    // componentDidMount() {
+    // }
 
-    componentDidMount() {
-    }
-
-    componentDidUpdate() {
-    }
-
-
-    /**
-     * Onclick Cancel button event, trigger onCancle and handleCancel in App.js
-     * @function cancel
-     */
-    cancel = () => {
-        this.props.onCancel(this.userBestScore);
-    }
-
-    /**
-     * Called when invalid attempt, timed-out JWT, to access MongoDB
-     * @function logout
-     */
-    logout = () => this.props.onLogout();
+    // componentDidUpdate() {
+    // }
 
     render() {
         return (
             <div>
-                <Modal isOpen={this.props.isOpenLeaderBoardModal} modalTransition={{ timeout: 700 }} backdropTransition={{ timeout: 1300 }} toggle={this.toggleModal} >
+                <Modal isOpen={this.props.isOpenExtraModal} modalTransition={{ timeout: 700 }} backdropTransition={{ timeout: 1300 }} toggle={this.toggleModal} >
                     <ModalHeader toggle={this.toggleModal}>Generic Modal with Mongo Data</ModalHeader>
                     <ModalBody>
                         <Form >
@@ -81,7 +67,7 @@ class ExtraModal extends Component {
                         </Form>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="secondary" onClick={this.cancel}>Cancel</Button>
+                        <Button color="secondary" onClick={() => this.props.dispatch(toggleExtraModal())}>Cancel</Button>
                     </ModalFooter>
                 </Modal>
             </div>
@@ -90,4 +76,15 @@ class ExtraModal extends Component {
     }
 
 }
-export default ExtraModal;
+
+const mapStateToProps = (state) => {
+    return {
+        username: state.username,
+        email: state.email,
+        loggedIn: state.loggedIn,
+        isOpenExtraModal: state.isOpenExtraModal
+    }
+}
+
+export default connect(mapStateToProps)(ExtraModal);
+// export default ExtraModal;

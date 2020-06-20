@@ -3,6 +3,7 @@
 import React from "react";
 import { Col, Row, Container } from "../components/Grid";
 import Jumbotron from "../components/Jumbotron";
+import { connect } from 'react-redux';
 
 /**
  * if route/resource not found display this page
@@ -26,5 +27,14 @@ function NoMatch() {
     </Container>
   );
 }
+const mapStateToProps = (state) => {
+  return {
+    username: state.username,
+    email: state.email,
+    token: state.token,
+    loggedIn: state.loggedIn
+  }
+}
 
-export default NoMatch;
+export default connect(mapStateToProps)(NoMatch);
+// export default NoMatch;

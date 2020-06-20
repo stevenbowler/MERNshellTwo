@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
+import { connect } from 'react-redux';
+
 
 class Detail extends Component {
   state = {
@@ -54,4 +56,14 @@ class Detail extends Component {
   }
 }
 
-export default Detail;
+const mapStateToProps = (state) => {
+  return {
+    username: state.username,
+    email: state.email,
+    token: state.token,
+    loggedIn: state.loggedIn
+  }
+}
+
+export default connect(mapStateToProps)(Detail);
+// export default Detail;

@@ -13,10 +13,14 @@ import {
     Col,
     Modal, ModalHeader, ModalBody, ModalFooter
 } from 'reactstrap';
+import { connect } from 'react-redux';
+import { toggleRegisterModal } from '../../redux/actionCreator';
+
+
 const { passwordValidation, emailValidation, nameValidation } = require('../../utils/validationNameEmailPassword');
 
 
-class LoginRegisterModals extends Component {
+class RegisterModal extends Component {
     constructor(props) {
         super(props);
         this.validEmail = false;
@@ -34,14 +38,10 @@ class LoginRegisterModals extends Component {
 
 
 
-
-
-
-
     componentDidMount() {
-
-
     }
+
+
     /**
      * @function handleSubmit
      * @param {*} event
@@ -59,13 +59,6 @@ class LoginRegisterModals extends Component {
             this.validEmail = false;
             this.validPassword = false;
             event.preventDefault();         // TODO register modal stays open with this
-        }
-        else if (this.validEmail && this.validPassword && this.props.isOpenLoginModal) {
-            // console.log("handleSubmit Login with email: " + event.target.email.value + "password: " + event.target.password.value);
-            this.props.onLogin({ email: event.target.email.value, password: event.target.password.value });
-            this.validEmail = false;
-            this.validPassword = false;
-            event.preventDefault();
         }
         else event.preventDefault();
     }
@@ -177,17 +170,17 @@ class LoginRegisterModals extends Component {
     render() {
         return (
             <div ref={this.wrapper}>
-                <Modal isOpen={this.props.isOpenRegisterModal} modalTransition={{ timeout: 700 }} backdropTransition={{ timeout: 1300 }} toggle={this.toggleModal} >
-                    <ModalHeader toggle={this.toggleModal}>{this.props.isOpenLoginModal ? "Login" : "Register"}</ModalHeader>
+                <Modal isOpen={this.props.isOpenRegisterModal} modalTransition={{ timeout: 700 }} backdropTransition={{ timeout: 1300 }}  >
+                    <ModalHeader>Register</ModalHeader>
                     <ModalBody>
                         <Form onSubmit={this.handleSubmit}>
-                            <FormGroup hidden={this.props.isOpenLoginModal ? true : false}>
+                            <FormGroup >
                                 <Label for="nameInput" sm={20}>Name:</Label>
                                 <Col sm={100}>
                                     <Input
                                         type="search"
                                         id="nameInput"
-                                        defaultValue={this.props.isOpenLoginModal ? "Not Logged In" : ""}
+                                        defaultValue=""
                                         name="name"
                                         onChange={this.handleNameChange}
                                         placeholder="8 characters minumum"
@@ -228,11 +221,11 @@ class LoginRegisterModals extends Component {
                                     <FormText>{this.invalidPasswordMessage}</FormText>
                                 </Col>
                             </FormGroup>
-                            <Button color="primary" type="submit" >{this.props.isOpenLoginModal ? "Login" : "Register"}</Button>{' '}
+                            <Button color="primary" type="submit" >Register</Button>{' '}
                         </Form>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="secondary" onClick={this.handleCancel}>Cancel</Button>
+                        <Button color="secondary" onClick={() => this.props.dispatch(toggleRegisterModal())}>Cancel</Button>
                     </ModalFooter>
                 </Modal>
             </div>
@@ -241,4 +234,14 @@ class LoginRegisterModals extends Component {
     }
 
 }
-export default LoginRegisterModals;
+
+const mapStateToProps = (state) => {
+    return {
+        username: state.username,
+        email: state.email,
+        loggedIn: state.loggedIn,
+        isOpenRegisterModal: state.isOpenRegisterModal
+    }
+}
+
+export default connect(mapStateToProps)(RegisterModal);
