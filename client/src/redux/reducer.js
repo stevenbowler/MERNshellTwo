@@ -1,7 +1,11 @@
+//@ts-check
+/**@module */
+
 import * as actions from './actions';
 import { cloneDeep } from 'lodash';
 
 const initialState = {
+    value: { something: "something" },
     username: sessionStorage.getItem("name"),
     email: sessionStorage.getItem("email"),
     token: sessionStorage.getItem("token"),
@@ -27,7 +31,7 @@ export const todoReducer = (state = initialState, action) => {
             sessionStorage.setItem("name", newState.username);
             sessionStorage.setItem("loggedIn", newState.loggedIn);
             newState.errorMessage = null;
-            console.log("new state.username: ", newState.username);
+            console.log("LOGIN_USER: ", newState.username);
             return newState;
 
         case actions.REGISTER_USER:
@@ -35,7 +39,7 @@ export const todoReducer = (state = initialState, action) => {
             newState.email = "";
             // newState.token = action.token;
             newState.loggedIn = "true";
-            console.log("new state.username: ", newState.username);
+            console.log("REGISTER_USER: ", newState.username);
             return newState;
 
         case actions.LOGIN_ERROR:
@@ -44,11 +48,11 @@ export const todoReducer = (state = initialState, action) => {
             newState.token = "";
             newState.loggedIn = "false";
             newState.errorMessage = action.message;
-            console.log("new LOGOUT_USER newstate.errorMessage: ", newState.errorMessage);
+            console.log("LOGIN_ERROR: ", newState.errorMessage);
             return newState;
 
         case actions.LOGOUT_USER:
-            console.log("LOGOUT_USER state.username: ", state.username);
+            console.log("LOGOUT_USER: ", state.username);
             newState.username = "Guest...Login";
             newState.email = "";
             newState.token = "";
@@ -61,22 +65,22 @@ export const todoReducer = (state = initialState, action) => {
 
         case actions.TOGGLE_NAVBAR:
             newState.isOpenNavbar = !state.isOpenNavbar;
-            console.log("new TOGGLE_NAVBAR state.isOpenNavbar: ", newState.isOpenNavbar);
+            // console.log("TOGGLE_NAVBAR: ", newState.isOpenNavbar);
             return newState;
 
         case actions.TOGGLE_EXTRAMODAL:
             newState.isOpenExtraModal = !state.isOpenExtraModal;
-            console.log("new TOGGLE_EXTRAMODAL state.isOpenExtraModal: ", newState.isOpenExtraModal);
+            // console.log("TOGGLE_EXTRAMODAL: ", newState.isOpenExtraModal);
             return newState;
 
         case actions.TOGGLE_LOGINMODAL:
             newState.isOpenLoginModal = !state.isOpenLoginModal;
-            console.log("new TOGGLE_EXTRAMODAL state.isOpenLoginModal: ", newState.isOpenLoginModal);
+            // console.log("TOGGLE_LOGINMODAL: ", newState.isOpenLoginModal);
             return newState;
 
         case actions.TOGGLE_REGISTERMODAL:
             newState.isOpenRegisterModal = !state.isOpenRegisterModal;
-            console.log("new TOGGLE_EXTRAMODAL state.isOpenRegisterModal: ", newState.isOpenRegisterModal);
+            // console.log("TOGGLE_REGISTER: ", newState.isOpenRegisterModal);
             return newState;
 
         case actions.SAVES_CAMPGROUNDS:

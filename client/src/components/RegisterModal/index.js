@@ -1,6 +1,8 @@
 //@ts-check
 /**@module 
  * @requires react
+ * @requires reactstrap
+ * @requires react-redux
 */
 import React, { Component } from 'react';
 import {
@@ -15,6 +17,8 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { toggleRegisterModal } from '../../redux/actionCreator';
+import API from '../../utils/userAPI';
+
 
 
 const { passwordValidation, emailValidation, nameValidation } = require('../../utils/validationNameEmailPassword');
@@ -23,23 +27,26 @@ const { passwordValidation, emailValidation, nameValidation } = require('../../u
 class RegisterModal extends Component {
     constructor(props) {
         super(props);
-        this.validEmail = false;
-        this.invalidEmail = false;
-        this.validName = false;
-        this.invalidName = false;
-        this.validPassword = false;
-        this.invalidPassword = false;
-        this.invalidEmailMessage = "";
-        this.invalidNameMessage = "";
-        this.invalidPasswordMessage = "";
-        this.login = false;
+
         this.wrapper = React.createRef();
+        this.name = {
+            valid: false,
+            invalid: false,
+            invalidMessage: ""
+        };
+        this.email = {
+            valid: false,
+            invalid: false,
+            invalidMessage: ""
+        };
+        this.password = {
+            valid: false,
+            invalid: false,
+            invalidMessage: ""
+        };
     }
 
 
-
-    componentDidMount() {
-    }
 
 
     /**
@@ -53,119 +60,66 @@ class RegisterModal extends Component {
             email: event.target.email.value,
             password: event.target.password.value
         }
-        if (this.validName && this.validEmail && this.validPassword) {
-            this.props.onRegister(data);
-            this.validName = false;
-            this.validEmail = false;
-            this.validPassword = false;
-            event.preventDefault();         // TODO register modal stays open with this
+        // console.log("this.email.valid:", this.email.valid);
+        if (this.name.valid && this.email.valid && this.password.valid) {
+            API.registerAPI(data, this.props.dispatch);
+            this.name.valid = false;
+            this.email.valid = false;
+            this.password.valid = false;
+            event.preventDefault();
         }
-        else event.preventDefault();
+        else {
+            console.log("did not pass validation");
+            event.preventDefault();
+        }
     }
 
-    /**
-     * handle Cancel event button
+
+    /**Handle each character input in name field, generic validation for name, email, password
+     * @function handleInputChange
+     * @param {*} event
+     */
+    handleInputChange = (event) => {
+        const { name, value } = event.target;
+        const test = {
+            [name]: value
+        };
+        switch ([name].toString()) {
+            case "name": var { error } = nameValidation(test); break;
+            case "email": var { error } = emailValidation(test); break;
+            case "password": var { error } = passwordValidation(test); break;
+            default: break;
+        }
+        if (error) {
+            this[name].valid = false;
+            this[name].invalid = true;
+            this[name].invalidMessage = error.details[0].message;
+            this.forceUpdate();
+            return;
+        }
+        if (event.target.value) {
+            this[name].valid = true;
+            this[name].invalid = false;
+            this[name].invalidMessage = "";
+            this.forceUpdate();
+        }
+    }
+
+    /**Reset all validation variables, dispatch TOGGLE_REGISTERMODAL
      * @function handleCancel
      */
     handleCancel = () => {
-        this.validEmail = false;
-        this.invalidEmail = false;
-        this.validName = false;
-        this.invalidName = false;
-        this.validPassword = false;
-        this.invalidPassword = false;
-        this.invalidEmailMessage = "";
-        this.invalidNameMessage = "";
-        this.invalidPasswordMessage = "";
-        this.props.onCancel();
+        this.email.valid = false;
+        this.email.invalid = false;
+        this.name.valid = false;
+        this.name.invalid = false;
+        this.password.valid = false;
+        this.password.invalid = false;
+        this.email.invalidMessage = "";
+        this.name.invalidMessage = "";
+        this.password.invalidMessage = "";
+        this.props.dispatch(toggleRegisterModal());
     }
-
-
-    /**
-     * Handle changes in name field on login/register form
-     * @function handleNameChange
-     * @param {*} event
-     */
-    handleNameChange = (event) => {
-        const data = {
-            name: event.target.value
-        }
-        const { error } = nameValidation(data);
-        if (error) {
-            this.validName = false;
-            this.invalidName = true;
-            this.invalidNameMessage = error.details[0].message;
-            this.forceUpdate();
-            //console.log("NameInput: " + event.target.value + "validation error: " + error.details[0].message);
-            return;
-        }
-        if (event.target.value) {
-            //console.log("NameInput: " + event.target.value);
-            this.validName = true;
-            this.invalidName = false;
-            this.invalidNameMessage = "";
-            this.forceUpdate();
-        }
-    }
-
-
-    /**
-     * handle each character input in email field
-     * @function handleEmailChange
-     * @param {*} event
-     */
-    handleEmailChange = (event) => {
-        const data = {
-            email: event.target.value
-        }
-        const { error } = emailValidation(data);
-        if (error) {
-            this.validEmail = false;
-            this.invalidEmail = true;
-            this.invalidEmailMessage = error.details[0].message;
-            this.forceUpdate();
-            //console.log("emailInput: " + event.target.value + "validation error: " + error.details[0].message);
-            return;
-        }
-        if (event.target.value) {
-            //console.log("emailInput: " + event.target.value);
-            this.validEmail = true;
-            this.invalidEmail = false;
-            this.invalidEmailMessage = "";
-            this.forceUpdate();
-        }
-    }
-
-
-
-    /**
-     * handle each character input in password field
-     * @function handlePasswordChange
-     * @param {*} event
-     */
-    handlePasswordChange = (event) => {
-        const data = {
-            password: event.target.value
-        }
-        const { error } = passwordValidation(data);
-        if (error) {
-            this.validPassword = false;
-            this.invalidPassword = true;
-            this.invalidPasswordMessage = error.details[0].message;
-            this.forceUpdate();
-            //console.log("PasswordInput: " + event.target.value + "validation error: " + error.details[0].message);
-            return;
-        }
-        if (event.target.value) {
-            //console.log("PasswordInput: " + event.target.value);
-            this.validPassword = true;
-            this.invalidPassword = false;
-            this.invalidPasswordMessage = "";
-            this.forceUpdate();
-
-        }
-    }
-
 
     render() {
         return (
@@ -182,12 +136,12 @@ class RegisterModal extends Component {
                                         id="nameInput"
                                         defaultValue=""
                                         name="name"
-                                        onChange={this.handleNameChange}
+                                        onChange={this.handleInputChange}
                                         placeholder="8 characters minumum"
-                                        valid={this.validName ? true : false}
-                                        invalid={this.invalidName ? true : false}>
+                                        valid={this.name.valid ? true : false}
+                                        invalid={this.name.invalid ? true : false}>
                                     </Input>
-                                    <FormText>{this.invalidNameMessage}</FormText>
+                                    <FormText>{this.name.invalidMessage}</FormText>
                                 </Col>
                             </FormGroup>
                             <FormGroup>
@@ -198,12 +152,14 @@ class RegisterModal extends Component {
                                         id="emailInput"
                                         defaultValue=""
                                         name="email"
-                                        onChange={this.handleEmailChange}
+                                        onChange={this.handleInputChange}
                                         placeholder="8 characters minumum"
-                                        valid={this.validEmail ? true : false}
-                                        invalid={this.invalidEmail ? true : false} >
+                                        valid={this.email.valid ? true : false}
+                                        invalid={this.email.invalid ? true : false} >
+                                        {/* valid={this.validEmail ? true : false}
+                                        invalid={this.invalidEmail ? true : false} > */}
                                     </Input>
-                                    <FormText>{this.invalidEmailMessage}</FormText>
+                                    <FormText>{this.email.invalidMessage}</FormText>
                                 </Col>
                             </FormGroup>
                             <FormGroup>
@@ -214,18 +170,18 @@ class RegisterModal extends Component {
                                         id="passwordInput"
                                         defaultValue=""
                                         name="password"
-                                        onChange={this.handlePasswordChange}
+                                        onChange={this.handleInputChange}
                                         placeholder="8 characters minumum"
-                                        valid={this.validPassword ? true : false}
-                                        invalid={this.invalidPassword ? true : false} />
-                                    <FormText>{this.invalidPasswordMessage}</FormText>
+                                        valid={this.password.valid ? true : false}
+                                        invalid={this.password.invalid ? true : false} />
+                                    <FormText>{this.password.invalidMessage}</FormText>
                                 </Col>
                             </FormGroup>
                             <Button color="primary" type="submit" >Register</Button>{' '}
                         </Form>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="secondary" onClick={() => this.props.dispatch(toggleRegisterModal())}>Cancel</Button>
+                        <Button color="secondary" onClick={this.handleCancel}>Cancel</Button>
                     </ModalFooter>
                 </Modal>
             </div>

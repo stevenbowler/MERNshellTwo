@@ -66,17 +66,33 @@ class AppNavbar extends Component {
      */
     logout = () => this.props.dispatch(logout());
 
-    /**
-     * Onclick request tutorial video
-     * @function tutorial
-     */
-    tutorial = () => this.props.onTutorial();
 
     /**
-     * Onclick request to change background color
+     * handle the Changecolor event from Navbar
      * @function changeColor
      */
-    changeColor = () => this.props.onChangeColor();
+    changeColor = () => {
+        console.log("changeColor");
+        var randomRed = Math.floor(Math.random() * 255);
+        var randomGreen = Math.floor(Math.random() * 255);
+        var randomBlue = Math.floor(Math.random() * 255);
+        console.log(randomGreen);
+        //@ts-ignore
+        document.body.style = `background-color: rgb(${randomRed}, ${randomGreen}, ${randomBlue});`;
+    }
+
+
+    /**
+     * handle the Tutorial button event, play the tutorial for this app
+     * @function tutorial
+     */
+    tutorial = () => {
+        console.log("handleTutorial");
+        window.location.href = "https://drive.google.com/file/d/1dXeXGydfJTvsE2GS7LnczJzTW0EKO-wS/view?usp=sharing";
+    }
+
+
+
 
     render() {
         return (
