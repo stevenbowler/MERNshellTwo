@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: client/src/pages/NoMatch.js</title>
+    <title>JSDoc: Source: client/src/redux/actions.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: client/src/pages/NoMatch.js</h1>
+    <h1 class="page-title">Source: client/src/redux/actions.js</h1>
 
     
 
@@ -28,45 +28,15 @@
         <article>
             <pre class="prettyprint source linenums"><code>//@ts-check
 /**@module */
-import React from "react";
-import { Col, Row, Container } from "../components/Grid";
-import Jumbotron from "../components/Jumbotron";
-import { connect } from 'react-redux';
-
-/**
- * if route/resource not found display this page
- * @function NoMatch
- */
-function NoMatch() {
-  return (
-    &lt;Container fluid>
-      &lt;Row>
-        &lt;Col size="md-12">
-          &lt;Jumbotron>
-            &lt;h1>404 Page Not Found&lt;/h1>
-            &lt;h1>
-              &lt;span role="img" aria-label="Face With Rolling Eyes Emoji">
-                🙄
-              &lt;/span>
-            &lt;/h1>
-          &lt;/Jumbotron>
-        &lt;/Col>
-      &lt;/Row>
-    &lt;/Container>
-  );
-}
-const mapStateToProps = (state) => {
-  return {
-    username: state.username,
-    email: state.email,
-    token: state.token,
-    loggedIn: state.loggedIn
-  }
-}
-
-export default connect(mapStateToProps)(NoMatch);
-// export default NoMatch;
-</code></pre>
+export const LOGIN_USER = 'LOGIN_USER';
+export const REGISTER_USER = 'REGISTER_USER';
+export const LOGOUT_USER = 'LOGOUT_USER';
+export const LOGIN_ERROR = 'LOGIN_ERROR';
+export const TOGGLE_NAVBAR = 'TOGGLE_NAVBAR';
+export const TOGGLE_EXTRAMODAL = 'TOGGLE_EXTRAMODAL';
+export const TOGGLE_LOGINMODAL = 'TOGGLE_LOGINMODAL';
+export const TOGGLE_REGISTERMODAL = 'TOGGLE_REGISTERMODAL';
+export const SAVES_CAMPGROUNDS = 'SAVES_CAMPGROUNDS'</code></pre>
         </article>
     </section>
 

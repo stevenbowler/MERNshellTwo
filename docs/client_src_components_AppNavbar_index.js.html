@@ -45,81 +45,100 @@ import {
     Button
 } from 'reactstrap';
 import { connect } from 'react-redux';
+import {
+    toggleNavbar,
+    toggleExtraModal,
+    logout,
+    toggleLoginModal,
+    toggleRegisterModal
+} from '../../redux/actionCreator';
 
 
 
 
 class AppNavbar extends Component {
-    /**
-     * Toggle the navbar modal variable
-     * @function toggleModal */
-    toggleModal = () => this.modal = !this.modal;
-
-    /** 
-     * Unused
-     */
-    registerInput = () => this.toggleModal();
+    constructor(props) {
+        super(props);
+        this.wrapper = React.createRef();  //  todo requires ref={this.wrapper} in navbar div to eliminate deprecation warning
+    }
 
     /**
-     * Send back toggle signal to App.js, to open/close navbar
+     * Onclick Toggle Navbar with redux call
      * @function toggle
      */
-    toggle = () => this.props.onToggle();
+    toggleNavbar = () => this.props.dispatch(toggleNavbar());
+
+
+    /**
+     * Onclick toggle ExtraModal with redux toggle
+     * @function leaderBoard
+     */
+    extraModal = () => this.props.dispatch(toggleExtraModal());
+
 
     /**
      * Onclick request to register
      * @function register
      */
-    register = () => this.props.onRegister();
+    register = () => this.props.dispatch(toggleRegisterModal());
 
     /**
      * Onclick request to login
      * @function login
      */
-    login = () => this.props.onLogin();
+    login = () => this.props.dispatch(toggleLoginModal());
 
     /**
      * Onclick request to logout
      * @function logout
      */
-    logout = () => this.props.onLogout();
+    logout = () => this.props.dispatch(logout());
+
 
     /**
-     * Onclick toggle leaderboard
-     * @function leaderBoard
-     */
-    leaderBoard = () => this.props.onLeaderBoard();
-
-    /**
-     * Onclick request tutorial video
-     * @function tutorial
-     */
-    tutorial = () => this.props.onTutorial();
-
-    /**
-     * Onclick request to change background color
+     * handle the Changecolor event from Navbar
      * @function changeColor
      */
-    changeColor = () => this.props.onChangeColor();
+    changeColor = () => {
+        console.log("changeColor");
+        var randomRed = Math.floor(Math.random() * 255);
+        var randomGreen = Math.floor(Math.random() * 255);
+        var randomBlue = Math.floor(Math.random() * 255);
+        console.log(randomGreen);
+        //@ts-ignore
+        document.body.style = `background-color: rgb(${randomRed}, ${randomGreen}, ${randomBlue});`;
+    }
+
+
+    /**
+     * handle the Tutorial button event, play the tutorial for this app
+     * @function tutorial
+     */
+    tutorial = () => {
+        console.log("handleTutorial");
+        window.location.href = "https://drive.google.com/file/d/1dXeXGydfJTvsE2GS7LnczJzTW0EKO-wS/view?usp=sharing";
+    }
+
+
+
 
     render() {
         return (
             // &lt;div> //removed to get sticky navbar with reactstrap https://github.com/reactstrap/reactstrap/issues/1179
             &lt;Navbar color="dark" expand="sm" className="mb-5 sticky-top">
-                {/* &lt;Container> */}
                 &lt;NavbarBrand href="/">MERNshellTwo&lt;/NavbarBrand>
                 &lt;NavbarText className="text-warning" placeholder="test">{this.props.username}&lt;/ NavbarText>
-                &lt;NavbarToggler color="dark" border="dark" onClick={this.toggle}>&lt;img src='hamburger.jpg' alt='Menu' style={{
+                &lt;NavbarToggler color="dark" border="dark" onClick={this.toggleNavbar}>&lt;img src='/hamburger.jpg' alt='Menu' style={{
                     height: "40px",
                     width: "40px"
                 }}>&lt;/img>&lt;/NavbarToggler>
-                &lt;Collapse isOpen={this.props.isOpen} navbar>
+                &lt;Collapse isOpen={this.props.isOpenNavbar} navbar>
                     &lt;Nav className="ml-auto" navbar>
-                        &lt;Button color="dark" hidden={this.props.loggedIn ? true : false} float="left" display="inline" onClick={this.register}>Register&lt;/Button>
-                        &lt;Button color="dark" hidden={this.props.loggedIn ? true : false} float="left" display="inline" onClick={this.login}>Login&lt;/Button>
-                        &lt;Button color="dark" hidden={this.props.loggedIn ? false : true} float="left" display="inline" onClick={this.logout}>Logout&lt;/Button>
-                        &lt;Button color="dark" hidden={this.props.loggedIn ? false : true} float="left" display="inline" onClick={this.leaderBoard}>Modal&lt;/Button>
-                        &lt;Button color="dark" hidden={this.props.loggedIn ? true : false} float="left" display="inline" onClick={this.tutorial}>Tutorial&lt;/Button>
+                        &lt;Button color="dark" hidden={this.props.loggedIn === "true" ? true : false} float="left" display="inline" onClick={this.register}>Register&lt;/Button>
+                        &lt;Button color="dark" hidden={this.props.loggedIn === "true" ? true : false} float="left" display="inline" onClick={this.login}>Login&lt;/Button>
+                        &lt;Button color="dark" hidden={this.props.loggedIn === "true" ? false : true} float="left" display="inline" onClick={this.logout}>Logout&lt;/Button>
+                        &lt;Button color="dark" hidden={this.props.loggedIn === "true" ? false : true} float="left" display="inline" onClick={this.extraModal}>Modal&lt;/Button>
+                        &lt;Button color="dark" hidden={this.props.loggedIn === "true" ? true : false} float="left" display="inline" onClick={this.tutorial}>Tutorial&lt;/Button>
                         {/* &lt;Button float="left" display="inline" onClick={this.unused}>Unused&lt;/Button> */}
                         &lt;Button float="left" color="dark" display="inline" onClick={this.changeColor}>Color&lt;/Button>
                         &lt;NavItem>
@@ -127,10 +146,7 @@ class AppNavbar extends Component {
                         &lt;/NavItem>
                     &lt;/Nav>
                 &lt;/Collapse>
-                {/* &lt;/Container> */}
-
             &lt;/Navbar>
-
             // &lt;/div >  //removed to get sticky navbar with reactstrap https://github.com/reactstrap/reactstrap/issues/1179
         );
     }
@@ -141,7 +157,8 @@ const mapStateToProps = (state) => {
     return {
         username: state.username,
         email: state.email,
-        loggedIn: state.loggedIn
+        loggedIn: state.loggedIn,
+        isOpenNavbar: state.isOpenNavbar
     }
 }
 
@@ -156,13 +173,13 @@ export default connect(mapStateToProps)(AppNavbar);
 </div>
 
 <nav>
-    <h2><a href="index.html">MERNshellTwo</a></h2><h3>Modules</h3><ul><li><a href="module-client_src_App.html">client/src/App</a></li><li><a href="module-client_src_components_AppNavbar_index.html">client/src/components/AppNavbar/index</a></li><li><a href="module-client_src_components_DeleteBtn_index.html">client/src/components/DeleteBtn/index</a></li><li><a href="module-client_src_components_ExtraModal_index.html">client/src/components/ExtraModal/index</a></li><li><a href="module-client_src_components_Form_index.html">client/src/components/Form/index</a></li><li><a href="module-client_src_components_Grid_index.html">client/src/components/Grid/index</a></li><li><a href="module-client_src_components_Jumbotron_index.html">client/src/components/Jumbotron/index</a></li><li><a href="module-client_src_components_List_index.html">client/src/components/List/index</a></li><li><a href="module-client_src_components_LoginRegisterModals_index.html">client/src/components/LoginRegisterModals/index</a></li><li><a href="module-client_src_pages_Books.html">client/src/pages/Books</a></li><li><a href="module-client_src_pages_Detail.html">client/src/pages/Detail</a></li><li><a href="module-client_src_pages_NoMatch.html">client/src/pages/NoMatch</a></li><li><a href="module-client_src_utils_API.html">client/src/utils/API</a></li><li><a href="module-client_src_utils_validationNameEmailPassword.html">client/src/utils/validationNameEmailPassword</a></li><li><a href="module-controllers_booksController.html">controllers/booksController</a></li><li><a href="module-controllers_usersController.html">controllers/usersController</a></li><li><a href="module-models_book.html">models/book</a></li><li><a href="module-models_user.html">models/user</a></li><li><a href="module-privateRoutesAuth.html">privateRoutesAuth</a></li><li><a href="module-routes_api_books.html">routes/api/books</a></li><li><a href="module-routes_api_users.html">routes/api/users</a></li><li><a href="module-server.html">server</a></li><li><a href="module-validation.html">validation</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-client_src_utils_validationNameEmailPassword-emaileValidation.html">emaileValidation</a></li><li><a href="module-client_src_utils_validationNameEmailPassword-nameValidation.html">nameValidation</a></li><li><a href="module-client_src_utils_validationNameEmailPassword-passwordValidation.html">passwordValidation</a></li><li><a href="module-controllers_usersController-create.html">create</a></li><li><a href="module-controllers_usersController-findAll.html">findAll</a></li><li><a href="module-controllers_usersController-findById.html">findById</a></li><li><a href="module-controllers_usersController-remove.html">remove</a></li><li><a href="module-controllers_usersController-update.html">update</a></li><li><a href="module-models_book-bookSchema.html">bookSchema</a></li><li><a href="module-models_user-UserSchema.html">UserSchema</a></li><li><a href="module-validation-loginValidation.html">loginValidation</a></li><li><a href="module-validation-registerValidation.html">registerValidation</a></li></ul>
+    <h2><a href="index.html">MERNshellTwo</a></h2><h3>Modules</h3><ul><li><a href="module-client_src_App.html">client/src/App</a></li><li><a href="module-client_src_components_AppNavbar_index.html">client/src/components/AppNavbar/index</a></li><li><a href="module-client_src_components_DeleteBtn_index.html">client/src/components/DeleteBtn/index</a></li><li><a href="module-client_src_components_ExtraModal_index.html">client/src/components/ExtraModal/index</a></li><li><a href="module-client_src_components_Form_index.html">client/src/components/Form/index</a></li><li><a href="module-client_src_components_Grid_index.html">client/src/components/Grid/index</a></li><li><a href="module-client_src_components_Jumbotron_index.html">client/src/components/Jumbotron/index</a></li><li><a href="module-client_src_components_List_index.html">client/src/components/List/index</a></li><li><a href="module-client_src_components_LoginModal_index.html">client/src/components/LoginModal/index</a></li><li><a href="module-client_src_components_RegisterModal_index.html">client/src/components/RegisterModal/index</a></li><li><a href="module-client_src_pages_Books.html">client/src/pages/Books</a></li><li><a href="module-client_src_pages_Detail.html">client/src/pages/Detail</a></li><li><a href="module-client_src_pages_NoMatch.html">client/src/pages/NoMatch</a></li><li><a href="module-client_src_redux_actionCreator.html">client/src/redux/actionCreator</a></li><li><a href="module-client_src_redux_actions.html">client/src/redux/actions</a></li><li><a href="module-client_src_redux_reducer.html">client/src/redux/reducer</a></li><li><a href="module-client_src_utils_API.html">client/src/utils/API</a></li><li><a href="module-client_src_utils_validationNameEmailPassword.html">client/src/utils/validationNameEmailPassword</a></li><li><a href="module-controllers_booksController.html">controllers/booksController</a></li><li><a href="module-controllers_usersController.html">controllers/usersController</a></li><li><a href="module-models_book.html">models/book</a></li><li><a href="module-models_user.html">models/user</a></li><li><a href="module-privateRoutesAuth.html">privateRoutesAuth</a></li><li><a href="module-routes_api_books.html">routes/api/books</a></li><li><a href="module-routes_api_users.html">routes/api/users</a></li><li><a href="module-server.html">server</a></li><li><a href="module-validation.html">validation</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-client_src_utils_validationNameEmailPassword-emaileValidation.html">emaileValidation</a></li><li><a href="module-client_src_utils_validationNameEmailPassword-nameValidation.html">nameValidation</a></li><li><a href="module-client_src_utils_validationNameEmailPassword-passwordValidation.html">passwordValidation</a></li><li><a href="module-client_src_utils_validationNameEmailPassword-Validation.html">Validation</a></li><li><a href="module-controllers_usersController-create.html">create</a></li><li><a href="module-controllers_usersController-findAll.html">findAll</a></li><li><a href="module-controllers_usersController-findById.html">findById</a></li><li><a href="module-controllers_usersController-remove.html">remove</a></li><li><a href="module-controllers_usersController-update.html">update</a></li><li><a href="module-models_book-bookSchema.html">bookSchema</a></li><li><a href="module-models_user-UserSchema.html">UserSchema</a></li><li><a href="module-validation-loginValidation.html">loginValidation</a></li><li><a href="module-validation-registerValidation.html">registerValidation</a></li></ul><h3>Global</h3><ul><li><a href="global.html#handleLogin">handleLogin</a></li><li><a href="global.html#handleRegister">handleRegister</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Thu Jun 18 2020 14:26:51 GMT-0500 (Central Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Sun Jun 21 2020 11:08:35 GMT-0500 (Central Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
