@@ -57,15 +57,9 @@ class App extends React.Component {
    * @function componentDidMount
    */
   componentDidMount() {
-    // if opening session for the very first time then set username "Guest...Login", otherwise, leave as is
     if (!sessionStorage["name"]) {
-      console.log("app.js componentDidMount: ", this.state.name);
-      sessionStorage.setItem("name", "Guest...Login");
-      sessionStorage.setItem("token", "");
-      sessionStorage.setItem("email", "");
-      sessionStorage.setItem("loggedIn", "false");
+      this.props.dispatch(logout());    // on load, reset all user settings, only when not already set
     } else console.log("sessionStorage.name already exists");
-
   }
 
   // getSnapshotBeforeUpdate(prevprops, prevstate) {}
