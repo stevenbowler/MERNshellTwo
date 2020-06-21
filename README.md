@@ -77,6 +77,57 @@ heroku config:set --app=mernshell TOKEN_SECRET=any_random_string_but_always_use_
 ````
 
 
+Directory structure is as follows:
+
+```
+.
+│ 
+├── client
+│   └── public
+│   └── src
+│       ├── components
+│       │   └── various
+│       └── pages
+│       │   └── Book.js
+│       │   └── Detail.js
+│       └── utils
+│           └── API.js
+│           └── userAPI.js
+│ 
+├── controller
+│   └── booksController.js
+│   └── userController.js
+│
+├── docs
+│
+├── jsdoc.json
+│
+├── models
+│   └── index.js
+│         └── Book.js
+│         └── User.js
+│ 
+├── node_modules
+│ 
+├── package.json
+│ 
+├── privateRoutesAuth.js
+│
+├── routes
+│   └── api
+│         └── index.js
+│         └── books.js
+│         └── users.js
+│
+├── server.js
+│
+├── validation.js
+│
+
+```
+
+
+
 ## Available Scripts
 [Connect Repo with Heroku Video](https://youtu.be/GgNcs9zlFSA?list=PLOFmg4xbN_TPrB6w4rThsFanVxJI_SfER)
 

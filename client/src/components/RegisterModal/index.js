@@ -20,7 +20,6 @@ import { toggleRegisterModal } from '../../redux/actionCreator';
 import API from '../../utils/userAPI';
 
 
-
 const { passwordValidation, emailValidation, nameValidation } = require('../../utils/validationNameEmailPassword');
 
 
@@ -45,8 +44,6 @@ class RegisterModal extends Component {
             invalidMessage: ""
         };
     }
-
-
 
 
     /**
@@ -104,6 +101,7 @@ class RegisterModal extends Component {
             this.forceUpdate();
         }
     }
+
 
     /**Reset all validation variables, dispatch TOGGLE_REGISTERMODAL
      * @function handleCancel
