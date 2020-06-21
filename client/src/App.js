@@ -29,6 +29,8 @@ import RegisterModal from './components/RegisterModal';
 import LoginModal from './components/LoginModal';
 import ExtraModal from './components/ExtraModal';
 import { connect } from 'react-redux';
+import { logout } from './redux/actionCreator';
+
 
 
 
@@ -69,8 +71,6 @@ class App extends React.Component {
       <Router>
         <div ref={this.wrapper}>
           <AppNavbar
-            onTutorial={this.handleTutorial}
-            onChangeColor={this.handleChangeColor}
           />
           <LoginModal
           />
