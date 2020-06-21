@@ -1,3 +1,5 @@
+//@ts-check
+/**@module */
 import * as actions from './actions';
 
 
@@ -49,12 +51,5 @@ export const toggleLoginModal = () => {
 export const toggleRegisterModal = () => {
     return {
         type: actions.TOGGLE_REGISTERMODAL,
-    }
-}
-
-export const savesCampGrounds = (campGrounds) => {
-    return {
-        type: actions.SAVES_CAMPGROUNDS,
-        campGrounds
     }
 }
