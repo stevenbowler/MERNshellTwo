@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: client/src/components/ExtraModal/index.js</title>
+    <title>JSDoc: Source: client/src/components/LoginModal/index.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: client/src/components/ExtraModal/index.js</h1>
+    <h1 class="page-title">Source: client/src/components/LoginModal/index.js</h1>
 
     
 
@@ -27,75 +27,154 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>//@ts-check
-/**@module */
+/**@module 
+ * @requires react
+*/
 import React, { Component } from 'react';
 import {
     Button,
     Form,
     FormGroup,
     Label,
+    Input,
     FormText,
     Col,
     Modal, ModalHeader, ModalBody, ModalFooter
 } from 'reactstrap';
 import { connect } from 'react-redux';
-import { toggleExtraModal } from '../../redux/actionCreator';
-// import axios from 'axios';
+import { toggleLoginModal } from '../../redux/actionCreator';
+import API from '../../utils/userAPI';
 
 
-class ExtraModal extends Component {
-    // constructor(props) {
-    //     super(props);
+const { passwordValidation, emailValidation, nameValidation } = require('../../utils/validationNameEmailPassword');
 
-    // }
 
-    // componentDidMount() {
-    // }
+class LoginModal extends Component {
+    constructor(props) {
+        super(props);
+        this.wrapper = React.createRef();
+        this.email = {
+            valid: false,
+            invalid: false,
+            invalidMessage: ""
+        };
+        this.password = {
+            valid: false,
+            invalid: false,
+            invalidMessage: ""
+        };
+    }
 
-    // componentDidUpdate() {
-    // }
+
+
+    /**Receive event object w validated email and pswd, dispatch LOGIN_USER
+     * @function handleSubmit
+     * @param {*} event
+     */
+    handleSubmit = (event) => {
+        // console.log("App.js handleSubmit logging in with: ", event.target.email.value);
+        const data = {
+            email: event.target.email.value,
+            password: event.target.password.value
+        }
+
+        if (this.email.valid &amp;&amp; this.password.valid) {
+            // console.log("handleSubmit Login with email: " + event.target.email.value + "password: " + event.target.password.value);
+            API.loginAPI(data, this.props.dispatch);
+            this.email.valid = false;
+            this.password.valid = false;
+            event.preventDefault();
+        }
+        else event.preventDefault();
+    }
+
+
+    /**Handle each character input in value attribut with name attribute, generic validation for name, email, password
+     * @function handleInputChange
+     * @param {*} event
+     */
+    handleInputChange = (event) => {
+        const { name, value } = event.target;
+        const test = {
+            [name]: value
+        };
+        switch ([name].toString()) {
+            case "name": var { error } = nameValidation(test); break;
+            case "email": var { error } = emailValidation(test); break;
+            case "password": var { error } = passwordValidation(test); break;
+            default: break;
+        }
+        if (error) {
+            this[name].valid = false;
+            this[name].invalid = true;
+            this[name].invalidMessage = error.details[0].message;
+            this.forceUpdate();
+            return;
+        }
+        if (event.target.value) {
+            this[name].valid = true;
+            this[name].invalid = false;
+            this[name].invalidMessage = "";
+            this.forceUpdate();
+        }
+    }
+
+    /**Reset all validation variables, dispatch TOGGLE_REGISTERMODAL
+     * @function handleCancel
+     */
+    handleCancel = () => {
+        this.email.valid = false;
+        this.email.invalid = false;
+        this.password.valid = false;
+        this.password.invalid = false;
+        this.email.invalidMessage = "";
+        this.password.invalidMessage = "";
+        this.props.dispatch(toggleLoginModal());
+    }
 
     render() {
         return (
-            &lt;div>
-                &lt;Modal isOpen={this.props.isOpenExtraModal} modalTransition={{ timeout: 700 }} backdropTransition={{ timeout: 1300 }} toggle={this.toggleModal} >
-                    &lt;ModalHeader toggle={this.toggleModal}>Generic Modal with Mongo Data&lt;/ModalHeader>
+            &lt;div ref={this.wrapper}>
+                &lt;Modal isOpen={this.props.isOpenLoginModal} modalTransition={{ timeout: 700 }} backdropTransition={{ timeout: 1300 }} >
+                    &lt;ModalHeader>Login&lt;/ModalHeader>
                     &lt;ModalBody>
-                        &lt;Form >
+                        &lt;Form onSubmit={this.handleSubmit}>
                             &lt;FormGroup>
-                                &lt;Label for="BestScore" sm={20}>Top 5 All Time Best Data:&lt;/Label>
+                                &lt;Label for="emailInput" sm={20}>Email (Login ID):&lt;/Label>
                                 &lt;Col sm={100}>
-
-                                    &lt;FormText>
-                                        &lt;strong>{"1.  "}&lt;/strong>
-                                    &lt;/FormText>
+                                    &lt;Input
+                                        type="email"
+                                        id="emailInput"
+                                        defaultValue=""
+                                        name="email"
+                                        onChange={this.handleInputChange}
+                                        placeholder="8 characters minumum"
+                                        valid={this.email.valid ? true : false}
+                                        invalid={this.email.invalid ? true : false} >
+                                    &lt;/Input>
+                                    &lt;FormText>{this.email.invalidMessage}&lt;/FormText>
                                 &lt;/Col>
                             &lt;/FormGroup>
                             &lt;FormGroup>
-                                &lt;Label for="yourBestScore" sm={20}>Your Best: &lt;/Label>
+                                &lt;Label for="passwordInput" sm={20}>Password: &lt;/Label>
                                 &lt;Col sm={100}>
-
-                                    &lt;FormText>
-                                        {"Name:  "}
-                                        {"  Score:   "}
-                                        {"  Level:   "}
-                                    &lt;/FormText>
+                                    &lt;Input
+                                        type="password"
+                                        id="passwordInput"
+                                        defaultValue=""
+                                        name="password"
+                                        onChange={this.handleInputChange}
+                                        placeholder="8 characters minumum"
+                                        valid={this.password.valid ? true : false}
+                                        invalid={this.password.invalid ? true : false} />
+                                    &lt;FormText>{this.password.invalidMessage}&lt;/FormText>
                                 &lt;/Col>
                             &lt;/FormGroup>
-                            &lt;FormGroup>
-                                &lt;Label for="yourScore" sm={20}>This Game: &lt;/Label>
-                                &lt;Col sm={100}>
-
-                                    &lt;FormText>
-                                        {"  Your Score:  "}
-                                        {"  Your Level:   "}
-                                    &lt;/FormText>
-                                &lt;/Col>
-                            &lt;/FormGroup>
+                            &lt;Button color="primary" type="submit" >Login&lt;/Button>{' '}
                         &lt;/Form>
                     &lt;/ModalBody>
                     &lt;ModalFooter>
-                        &lt;Button color="secondary" onClick={() => this.props.dispatch(toggleExtraModal())}>Cancel&lt;/Button>
+                        &lt;Button color="secondary" onClick={this.handleCancel}>Cancel&lt;/Button>
                     &lt;/ModalFooter>
                 &lt;/Modal>
             &lt;/div>
@@ -110,12 +189,11 @@ const mapStateToProps = (state) => {
         username: state.username,
         email: state.email,
         loggedIn: state.loggedIn,
-        isOpenExtraModal: state.isOpenExtraModal
+        isOpenLoginModal: state.isOpenLoginModal
     }
 }
 
-export default connect(mapStateToProps)(ExtraModal);
-// export default ExtraModal;</code></pre>
+export default connect(mapStateToProps)(LoginModal);</code></pre>
         </article>
     </section>
 

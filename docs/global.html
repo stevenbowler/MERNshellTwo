@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: client/src/utils/API</title>
+    <title>JSDoc: Global</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: client/src/utils/API</h1>
+    <h1 class="page-title">Global</h1>
 
     
 
@@ -28,6 +28,7 @@
 
 <header>
     
+        <h2></h2>
         
     
 </header>
@@ -36,6 +37,45 @@
     <div class="container-overview">
     
         
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
 
         
     
@@ -64,7 +104,7 @@
     
 
     
-    <h4 class="name" id="~deleteBook"><span class="type-signature">(inner) </span>deleteBook<span class="signature">(id)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="handleLogin"><span class="type-signature"></span>handleLogin<span class="signature">(data)</span><span class="type-signature"></span></h4>
     
 
     
@@ -72,7 +112,7 @@
 
 
 <div class="description">
-    <p>Deletes the book with the given id</p>
+    <p>Called from LoginModal component then App.js handleLogin</p>
 </div>
 
 
@@ -108,13 +148,13 @@
 
         <tr>
             
-                <td class="name"><code>id</code></td>
+                <td class="name"><code>data</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">*</span>
+<span class="param-type"><a href="global.html#data">data</a></span>
 
 
             
@@ -165,7 +205,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_src_utils_API.js.html">client/src/utils/API.js</a>, <a href="client_src_utils_API.js.html#line30">line 30</a>
+        <a href="client_src_utils_userAPI.js.html">client/src/utils/userAPI.js</a>, <a href="client_src_utils_userAPI.js.html#line15">line 15</a>
     </li></ul></dd>
     
 
@@ -201,7 +241,7 @@
     
 
     
-    <h4 class="name" id="~getBook"><span class="type-signature">(inner) </span>getBook<span class="signature">(id)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="handleRegister"><span class="type-signature"></span>handleRegister<span class="signature">(data)</span><span class="type-signature"></span></h4>
     
 
     
@@ -209,7 +249,7 @@
 
 
 <div class="description">
-    <p>Gets the book with the given id</p>
+    <p>called from RegisterModal component to handle registration and then login request attribute changes</p>
 </div>
 
 
@@ -245,13 +285,13 @@
 
         <tr>
             
-                <td class="name"><code>id</code></td>
+                <td class="name"><code>data</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">*</span>
+<span class="param-type"><a href="global.html#data">data</a></span>
 
 
             
@@ -302,7 +342,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_src_utils_API.js.html">client/src/utils/API.js</a>, <a href="client_src_utils_API.js.html#line22">line 22</a>
+        <a href="client_src_utils_userAPI.js.html">client/src/utils/userAPI.js</a>, <a href="client_src_utils_userAPI.js.html#line48">line 48</a>
     </li></ul></dd>
     
 
@@ -338,7 +378,7 @@
     
 
     
-    <h4 class="name" id="~getBooks"><span class="type-signature">(inner) </span>getBooks<span class="signature">(username)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="module:privateRoutesAuth"><span class="type-signature"></span>module:privateRoutesAuth<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -346,7 +386,7 @@
 
 
 <div class="description">
-    <p>Gets all books</p>
+    <p>Middleware, checks header &quot;auth-token&quot; against JWT, if token OK proceed to next, else response=400</p>
 </div>
 
 
@@ -355,55 +395,6 @@
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>username</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -439,7 +430,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_src_utils_API.js.html">client/src/utils/API.js</a>, <a href="client_src_utils_API.js.html#line7">line 7</a>
+        <a href="privateRoutesAuth.js.html">privateRoutesAuth.js</a>, <a href="privateRoutesAuth.js.html#line12">line 12</a>
     </li></ul></dd>
     
 
@@ -470,34 +461,43 @@
 
 
         
-            
-
     
 
     
-    <h4 class="name" id="~saveBook"><span class="type-signature">(inner) </span>saveBook<span class="signature">(bookData)</span><span class="type-signature"></span></h4>
-    
+        <h3 class="subsection-title">Type Definitions</h3>
 
-    
+        
+                
+<h4 class="name" id="data">data</h4>
+
 
 
 
 <div class="description">
-    <p>Saves a book to the database</p>
+    <p>this is object with registration data</p>
 </div>
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">object</span>
+
+
+        </li>
+    </ul>
 
 
 
 
 
+    <h5 class="subsection-title">Properties:</h5>
 
-    <h5>Parameters:</h5>
     
 
-<table class="params">
+<table class="props">
     <thead>
     <tr>
         
@@ -506,6 +506,8 @@
 
         <th>Type</th>
 
+        
+        <th>Attributes</th>
         
 
         
@@ -519,30 +521,94 @@
 
         <tr>
             
-                <td class="name"><code>bookData</code></td>
+                <td class="name"><code>name</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">*</span>
+<span class="param-type">string</span>
 
 
             
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>8+ digit user name regex alpha-numeric, only required on register</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>email</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>email format string</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>password</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>minimum 8 digit password regex alpha-numeric</p></td>
         </tr>
 
     
     </tbody>
 </table>
-
-
 
 
 
@@ -576,7 +642,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_src_utils_API.js.html">client/src/utils/API.js</a>, <a href="client_src_utils_API.js.html#line39">line 39</a>
+        <a href="client_src_utils_userAPI.js.html">client/src/utils/userAPI.js</a>, <a href="client_src_utils_userAPI.js.html#line5">line 5</a>
     </li></ul></dd>
     
 
@@ -592,23 +658,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    
-
+            
     
 
     
