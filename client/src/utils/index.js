@@ -1,4 +1,4 @@
-// module.exports = {
-//   Book: require("./API"),
-//   User: require("./userAPI")
-// };
+module.exports = {
+  // Book: require("./API"),
+  API: require("./userAPI")
+};

@@ -38,7 +38,6 @@ class LoginModal extends Component {
     }
 
 
-
     /**Receive event object w validated email and pswd, dispatch LOGIN_USER
      * @function handleSubmit
      * @param {*} event
@@ -91,6 +90,7 @@ class LoginModal extends Component {
         }
     }
 
+
     /**Reset all validation variables, dispatch TOGGLE_REGISTERMODAL
      * @function handleCancel
      */
@@ -103,6 +103,7 @@ class LoginModal extends Component {
         this.password.invalidMessage = "";
         this.props.dispatch(toggleLoginModal());
     }
+
 
     render() {
         return (
