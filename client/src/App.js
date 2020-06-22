@@ -43,13 +43,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.wrapper = React.createRef();
-    this.state = {
-      isOpenNavBar: false,
-      isOpenLoginModal: false,
-      isOpenRegisterModal: false,
-      isOpenExtraModal: false
-    };
-
   }
 
 
@@ -66,18 +59,15 @@ class App extends React.Component {
 
   // getSnapshotBeforeUpdate(prevprops, prevstate) {}
 
+
   render() {
     return (
       <Router>
         <div ref={this.wrapper}>
-          <AppNavbar
-          />
-          <LoginModal
-          />
-          <RegisterModal
-          />
-          <ExtraModal
-          />
+          <AppNavbar />
+          <LoginModal />
+          <RegisterModal />
+          <ExtraModal />
           <Switch>
             <Route exact path="/" render={(props) => <Books {...props} />} />
             <Route exact path="/books" render={(props) => <Books {...props} />} />

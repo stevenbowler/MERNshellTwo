@@ -8,7 +8,7 @@ The MERNshell enables the coder/team to focus on their app while providing regis
 This project has afforded this programmer the opportunity to gain experience in development of full stack MERN apps including various technologies.  The Packages used include: [Redux](https://www.npmjs.com/package/redux), [@hapi/joi](https://www.npmjs.com/package/@hapi/joi), [bcryptjs](https://www.npmjs.com/package/bcryptjs), [body-parser](https://www.npmjs.com/package/body-parser), [concurrently](https://www.npmjs.com/package/concurrently), [cors](https://www.npmjs.com/package/cors), [dotenv](https://www.npmjs.com/package/dotenv), [express](https://www.npmjs.com/package/express), [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken), [mongoose](https://www.npmjs.com/package/mongoose).
 
 
-### User Documentation
+## User Documentation
 
 1. Watch the video tutorial by clicking [this link](https://drive.google.com/file/d/1dXeXGydfJTvsE2GS7LnczJzTW0EKO-wS/view?usp=sharing). Then click [this link](https://drive.google.com/file/d/1_4N8HZdfe0iLeP5e1oFAKL5MQbadpiw6/view?usp=sharing).
 
@@ -56,7 +56,7 @@ $ npm start
 
 
 
-### Program Documentation
+## Program Documentation
 
 See [program documentation](https://stevenbowler.github.io/MERNshellTwo/docs/index.html) in JSDOC format.
 
