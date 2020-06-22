@@ -3,6 +3,7 @@
 export const LOGIN_USER = 'LOGIN_USER';
 export const REGISTER_USER = 'REGISTER_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
+export const RESET_USER = 'RESET_USER';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const TOGGLE_NAVBAR = 'TOGGLE_NAVBAR';
 export const TOGGLE_EXTRAMODAL = 'TOGGLE_EXTRAMODAL';

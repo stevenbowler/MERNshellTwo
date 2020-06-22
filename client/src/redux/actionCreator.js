@@ -16,6 +16,12 @@ export const logout = () => {
     }
 }
 
+export const resetUser = () => {
+    return {
+        type: actions.RESET_USER
+    }
+}
+
 export const register = (user) => {
     return {
         type: actions.REGISTER_USER,

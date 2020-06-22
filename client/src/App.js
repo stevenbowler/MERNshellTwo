@@ -29,7 +29,7 @@ import RegisterModal from './components/RegisterModal';
 import LoginModal from './components/LoginModal';
 import ExtraModal from './components/ExtraModal';
 import { connect } from 'react-redux';
-import { logout } from './redux/actionCreator';
+import { resetUser } from './redux/actionCreator';
 
 
 
@@ -53,7 +53,7 @@ class App extends React.Component {
    */
   componentDidMount() {
     if (!sessionStorage["name"]) {
-      this.props.dispatch(logout());    // on load, reset all user settings, only when not already set
+      this.props.dispatch(resetUser());    // on load, reset all user settings, only when not already set
     } else console.log("sessionStorage.name already exists");
   }
 

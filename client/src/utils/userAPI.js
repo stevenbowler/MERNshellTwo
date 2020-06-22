@@ -8,7 +8,6 @@ import { login, loginError, toggleRegisterModal, toggleLoginModal } from '../red
 * @property {string} [name] - 8+ digit user name regex alpha-numeric, only required on register
 * @property {string} email - email format string
 * @property {string} password - minimum 8 digit password regex alpha-numeric
-* 
 */
 
 export default {
@@ -18,7 +17,7 @@ export default {
      * @param {data} data
      */
     loginAPI: function (data, dispatch) {
-        console.log("userAPI.Login(data): ", data);
+        // console.log("userAPI.Login(data): ", data);
         axios
             .post(
                 '/api/users/login',
@@ -27,7 +26,7 @@ export default {
                     password: data.password
                 })
             .then(response => {
-                console.log(`login user: ${response.data.user.name}`);
+                // console.log(`login user: ${response.data.user.name}`);
                 dispatch(login({
                     token: response.data.token,
                     email: response.data.user.email,
