@@ -43,7 +43,7 @@ class Books extends Component {
    * This is where the magic happens ... the infamous / route
    * @function loadBooks */
   loadBooks = () => {
-    // console.log("username: ", this.props.username);
+    // console.log("Books.js loadbooks this.props.username: ", this.props.username);
     API.getBooks({ username: this.props.username, token: this.props.token, email: this.props.email })
       .then(res => {
         this.setState({ books: res.data, title: "", author: "", synopsis: "" })
