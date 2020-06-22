@@ -83,7 +83,9 @@ class RegisterModal extends Component {
         };
         switch ([name].toString()) {
             case "name": var { error } = nameValidation(test); break;
+            // eslint-disable-next-line
             case "email": var { error } = emailValidation(test); break;
+            // eslint-disable-next-line
             case "password": var { error } = passwordValidation(test); break;
             default: break;
         }

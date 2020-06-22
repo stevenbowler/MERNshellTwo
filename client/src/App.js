@@ -29,7 +29,7 @@ import RegisterModal from './components/RegisterModal';
 import LoginModal from './components/LoginModal';
 import ExtraModal from './components/ExtraModal';
 import { connect } from 'react-redux';
-import { logout } from './redux/actionCreator';
+import { resetUser } from './redux/actionCreator';
 
 
 
@@ -43,13 +43,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.wrapper = React.createRef();
-    this.state = {
-      isOpenNavBar: false,
-      isOpenLoginModal: false,
-      isOpenRegisterModal: false,
-      isOpenExtraModal: false
-    };
-
   }
 
 
@@ -60,24 +53,21 @@ class App extends React.Component {
    */
   componentDidMount() {
     if (!sessionStorage["name"]) {
-      this.props.dispatch(logout());    // on load, reset all user settings, only when not already set
+      this.props.dispatch(resetUser());    // on load, reset all user settings, only when not already set
     } else console.log("sessionStorage.name already exists");
   }
 
   // getSnapshotBeforeUpdate(prevprops, prevstate) {}
 
+
   render() {
     return (
       <Router>
         <div ref={this.wrapper}>
-          <AppNavbar
-          />
-          <LoginModal
-          />
-          <RegisterModal
-          />
-          <ExtraModal
-          />
+          <AppNavbar />
+          <LoginModal />
+          <RegisterModal />
+          <ExtraModal />
           <Switch>
             <Route exact path="/" render={(props) => <Books {...props} />} />
             <Route exact path="/books" render={(props) => <Books {...props} />} />

@@ -52,7 +52,8 @@ export const todoReducer = (state = initialState, action) => {
             return newState;
 
         case actions.LOGOUT_USER:
-            console.log("LOGOUT_USER: ", state.username);
+        case actions.RESET_USER:
+            console.log("RESET_USER, was: ", state.username);
             newState.username = "Guest...Login";
             newState.email = "";
             newState.token = "";
@@ -61,6 +62,7 @@ export const todoReducer = (state = initialState, action) => {
             sessionStorage.setItem("email", newState.email);
             sessionStorage.setItem("token", newState.token);
             sessionStorage.setItem("loggedIn", "false");
+            console.log("RESET_USER, is: ", newState.username);
             return newState;
 
         case actions.TOGGLE_NAVBAR:
