@@ -10,8 +10,8 @@ export default {
    * @param {*} username
    * */
   getBooks: function (user) {
-    var url = "/api/books/?name=" + user.username;
-    if (user.username !== "Guest...Login") url = `/api/books/protected?name=${user.username}&email=${user.email}`; // used for protected routes in books.js
+    var url = "/api/books/?name=Guest...Login";
+    if (user.username !== "Guest...Login" && user.username !== null) url = `/api/books/protected?name=${user.username}&email=${user.email}`; // used for protected routes in books.js
     var token = user.token;
     return axios.get(url,
       {
